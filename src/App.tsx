@@ -32,6 +32,7 @@ const App: React.FC = () => {
     phone: "",
     guests: 1,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [message, setMessage] = useState<{
