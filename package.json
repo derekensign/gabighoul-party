@@ -29,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "init-db": "node scripts/init-db.js",
+    "test-db": "node scripts/test-db.js"
   },
   "eslintConfig": {
     "extends": [
