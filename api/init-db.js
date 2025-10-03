@@ -1,10 +1,4 @@
-const { Pool } = require('pg');
-
-// Create connection pool
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
-  ssl: process.env.POSTGRES_URL ? { rejectUnauthorized: false } : false
-});
+const { sql } = require('@vercel/postgres');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -13,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     // Create RSVPs table
-    await pool.query(`
+    await sql`
       CREATE TABLE IF NOT EXISTS rsvps (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -27,13 +21,13 @@ export default async function handler(req, res) {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
-    `);
+    `;
 
     // Create index on email for faster lookups
-    await pool.query('CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)');
+    await sql`CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)`;
 
     // Create index on created_at for sorting
-    await pool.query('CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)');
+    await sql`CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)`;
 
     res.status(200).json({ message: 'Database initialized successfully' });
   } catch (error) {
