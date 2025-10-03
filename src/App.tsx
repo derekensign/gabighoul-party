@@ -73,6 +73,8 @@ const App: React.FC = () => {
 
   const handlePaymentSuccess = async (paymentIntent: any) => {
     try {
+      console.log("Attempting to save RSVP to database...");
+      
       // Save RSVP to database via API
       const response = await fetch("/api/rsvps", {
         method: "POST",
@@ -88,6 +90,9 @@ const App: React.FC = () => {
         }),
       });
 
+      console.log("API response status:", response.status);
+      console.log("API response ok:", response.ok);
+
       if (response.ok) {
         const newRsvp = await response.json();
         setRsvps((prev) => [newRsvp, ...prev]);
@@ -99,7 +104,9 @@ const App: React.FC = () => {
             "!",
         });
       } else {
-        throw new Error("Failed to save RSVP");
+        const errorText = await response.text();
+        console.error("API response error:", response.status, errorText);
+        throw new Error(`Failed to save RSVP: ${response.status} ${errorText}`);
       }
     } catch (error) {
       console.error("Failed to save RSVP:", error);
