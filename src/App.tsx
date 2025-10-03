@@ -250,7 +250,7 @@ const App: React.FC = () => {
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
                   <Ticket size={20} style={{ marginRight: "10px" }} />
-                  BUY TICKETS - ${25 * formData.guests} TOTAL
+                  BUY TICKETS - $0.50 TOTAL
                 </button>
               </form>
             ) : (
