@@ -14,7 +14,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@types/react-router-dom": "^5.3.3",
-    "@vercel/postgres": "^0.10.0",
+    "@vercel/postgres": "^0.5.1",
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.544.0",
     "react": "^19.2.0",
