@@ -109,4 +109,4 @@ vercel
 
 ## 📄 License
 
-MIT License - feel free to use this for your own spooky parties! 🎃
+MIT License - feel free to use this for your own spooky parties! 🎃# Environment variables configured for Stripe integration
