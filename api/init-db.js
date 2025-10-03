@@ -1,4 +1,19 @@
-const { sql } = require('@vercel/postgres');
+const { Client } = require('pg');
+
+async function query(text, params) {
+  const client = new Client({
+    connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
+    ssl: { rejectUnauthorized: false }
+  });
+  
+  try {
+    await client.connect();
+    const result = await client.query(text, params);
+    return result;
+  } finally {
+    await client.end();
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,7 +22,7 @@ export default async function handler(req, res) {
 
   try {
     // Create RSVPs table
-    await sql`
+    await query(`
       CREATE TABLE IF NOT EXISTS rsvps (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -21,13 +36,13 @@ export default async function handler(req, res) {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
-    `;
+    `);
 
     // Create index on email for faster lookups
-    await sql`CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)`;
+    await query('CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)');
 
     // Create index on created_at for sorting
-    await sql`CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)`;
+    await query('CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)');
 
     res.status(200).json({ message: 'Database initialized successfully' });
   } catch (error) {
