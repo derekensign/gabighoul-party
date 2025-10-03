@@ -40,18 +40,22 @@ const App: React.FC = () => {
     text: string;
   } | null>(null);
 
-  // Load RSVPs from localStorage on component mount
+  // Load RSVPs from API on component mount
   useEffect(() => {
-    const savedRsvps = localStorage.getItem("gabyghoul-rsvps");
-    if (savedRsvps) {
-      setRsvps(JSON.parse(savedRsvps));
-    }
-  }, []);
+    const fetchRsvps = async () => {
+      try {
+        const response = await fetch("/api/rsvps");
+        if (response.ok) {
+          const data = await response.json();
+          setRsvps(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch RSVPs:", error);
+      }
+    };
 
-  // Save RSVPs to localStorage whenever rsvps change
-  useEffect(() => {
-    localStorage.setItem("gabyghoul-rsvps", JSON.stringify(rsvps));
-  }, [rsvps]);
+    fetchRsvps();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,25 +71,46 @@ const App: React.FC = () => {
     setShowCheckout(true);
   };
 
-  const handlePaymentSuccess = (paymentIntent: any) => {
-    const newRSVP: RSVPData = {
-      id: Date.now().toString(),
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      guests: formData.guests,
-      paymentStatus: "completed",
-      timestamp: new Date().toISOString(),
-    };
+  const handlePaymentSuccess = async (paymentIntent: any) => {
+    try {
+      // Save RSVP to database via API
+      const response = await fetch("/api/rsvps", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          guests: formData.guests,
+          paymentStatus: "completed",
+        }),
+      });
 
-    setRsvps((prev) => [...prev, newRSVP]);
+      if (response.ok) {
+        const newRsvp = await response.json();
+        setRsvps((prev) => [newRsvp, ...prev]);
+        setMessage({
+          type: "success",
+          text:
+            "🎉 RSVP confirmed! Welcome to the nightmare, " +
+            formData.name +
+            "!",
+        });
+      } else {
+        throw new Error("Failed to save RSVP");
+      }
+    } catch (error) {
+      console.error("Failed to save RSVP:", error);
+      setMessage({
+        type: "error",
+        text: "Payment successful but failed to save RSVP. Please contact support.",
+      });
+    }
+
     setFormData({ name: "", email: "", phone: "", guests: 1 });
     setShowCheckout(false);
-    setMessage({
-      type: "success",
-      text:
-        "🎉 RSVP confirmed! Welcome to the nightmare, " + formData.name + "!",
-    });
   };
 
   const handlePaymentError = (error: string) => {
@@ -97,7 +122,8 @@ const App: React.FC = () => {
   };
 
   const handleAdminLogin = () => {
-    if (adminPassword === "gabyghoul2024") {
+    const correctPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+    if (adminPassword === correctPassword) {
       setIsAuthenticated(true);
       setAdminPassword("");
     } else {
@@ -166,7 +192,7 @@ const App: React.FC = () => {
         >
           <div className="rsvp-form">
             <h3 className="form-title">🎫 SECURE YOUR SPOT IN HELL 🎫</h3>
-            
+
             {!showCheckout ? (
               <form onSubmit={handleRSVPSubmit}>
                 <div className="form-group">
@@ -222,44 +248,51 @@ const App: React.FC = () => {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn"
-                  style={{ width: "100%" }}
-                >
+                <button type="submit" className="btn" style={{ width: "100%" }}>
                   <Ticket size={20} style={{ marginRight: "10px" }} />
                   BUY TICKETS - ${25 * formData.guests} TOTAL
                 </button>
               </form>
             ) : (
               <div>
-                <div style={{ marginBottom: "1rem", padding: "1rem", background: "rgba(255, 0, 0, 0.1)", borderRadius: "8px" }}>
-                  <h4 style={{ color: "#ff6666", marginBottom: "0.5rem" }}>Order Summary</h4>
+                <div
+                  style={{
+                    marginBottom: "1rem",
+                    padding: "1rem",
+                    background: "rgba(255, 0, 0, 0.1)",
+                    borderRadius: "8px",
+                  }}
+                >
+                  <h4 style={{ color: "#ff6666", marginBottom: "0.5rem" }}>
+                    Order Summary
+                  </h4>
                   <p>Name: {formData.name}</p>
                   <p>Email: {formData.email}</p>
                   <p>Guests: {formData.guests}</p>
-                  <p style={{ fontWeight: "bold", color: "#ff0000" }}>Total: ${25 * formData.guests}</p>
+                  <p style={{ fontWeight: "bold", color: "#ff0000" }}>
+                    Total: $0.50
+                  </p>
                 </div>
-                
+
                 <CheckoutForm
-                  amount={25 * formData.guests * 100} // Convert to cents
+                  amount={50} // $0.50 minimum Stripe charge
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   customerInfo={{
                     name: formData.name,
                     email: formData.email,
-                    phone: formData.phone
+                    phone: formData.phone,
                   }}
                 />
-                
+
                 <button
                   onClick={() => setShowCheckout(false)}
                   className="btn"
-                  style={{ 
-                    width: "100%", 
+                  style={{
+                    width: "100%",
                     marginTop: "1rem",
                     background: "transparent",
-                    border: "2px solid #ff0000"
+                    border: "2px solid #ff0000",
                   }}
                 >
                   Back to Form

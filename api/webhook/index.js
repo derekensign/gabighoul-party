@@ -1,4 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { sql } = require("@vercel/postgres");
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -19,29 +20,37 @@ export default async function handler(req, res) {
 
   // Handle the event
   switch (event.type) {
-    case 'payment_intent.succeeded':
+    case "payment_intent.succeeded":
       const paymentIntent = event.data.object;
-      console.log('Payment succeeded:', paymentIntent.id);
-      
-      // Here you could:
-      // - Send confirmation email
-      // - Update database
-      // - Send notification to admin
-      // - Log the successful payment
-      
+      console.log("Payment succeeded:", paymentIntent.id);
+
+      // Save RSVP to database
+      try {
+        const metadata = paymentIntent.metadata;
+
+        await sql`
+          INSERT INTO rsvps (name, email, phone, guests, payment_status, stripe_payment_intent_id, created_at)
+          VALUES (${metadata.customer_name}, ${metadata.customer_email}, ${metadata.customer_phone}, 1, 'completed', ${paymentIntent.id}, NOW())
+        `;
+
+        console.log("RSVP saved to database successfully");
+      } catch (dbError) {
+        console.error("Failed to save RSVP to database:", dbError);
+      }
+
       break;
-    
-    case 'payment_intent.payment_failed':
+
+    case "payment_intent.payment_failed":
       const failedPayment = event.data.object;
-      console.log('Payment failed:', failedPayment.id);
-      
+      console.log("Payment failed:", failedPayment.id);
+
       // Here you could:
       // - Send failure notification
       // - Log the failed payment
       // - Update database status
-      
+
       break;
-    
+
     default:
       console.log(`Unhandled event type ${event.type}`);
   }

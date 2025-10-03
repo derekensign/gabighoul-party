@@ -26,11 +26,12 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    ```
 
 3. **Set up environment variables**
-   Create a `.env.local` file and add your Stripe keys:
+   Create a `.env.local` file and add your keys:
    ```
    REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
    STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+   REACT_APP_ADMIN_PASSWORD=your_admin_password_here
    ```
 
 4. **Start the development server**
@@ -102,12 +103,32 @@ vercel
 
 - **Real Stripe Integration**: This app now processes real payments through Stripe
 - **Backend API**: Uses Vercel Functions for secure payment processing
+- **Database**: RSVPs are stored in Vercel Postgres database
 - **Environment Variables**: Keep your Stripe secret keys secure and never commit them
-- **Admin password**: Hardcoded (change this for production)
-- **RSVP data**: Stored in localStorage (not persistent across devices)
-- **Webhooks**: Optional but recommended for production payment confirmations
+- **Admin password**: Configurable via environment variable
+- **Webhooks**: Automatically saves RSVPs to database on successful payments
 
-## 📄 License
+## 🗄️ Database Setup
 
-MIT License - feel free to use this for your own spooky parties! 🎃# Environment variables configured for Stripe integration
-# Switching to live Stripe keys
+1. **Add Vercel Postgres** to your project in the Vercel dashboard
+2. **Initialize the database** by calling `/api/init-db` endpoint
+3. **RSVPs are automatically saved** when payments succeed via webhooks
+
+## 💰 Refund System
+
+The app includes automatic refund functionality:
+
+### **Automatic Refunds (DELETE endpoint)**
+- **DELETE `/api/rsvps/[id]`** - Automatically refunds and deletes RSVP
+- **Full refund** - Refunds the entire payment amount
+- **Customer notification** - Stripe automatically emails the customer
+
+### **Manual Refunds (Refund endpoint)**
+- **POST `/api/rsvps/[id]/refund`** - Process refund without deleting RSVP
+- **Partial refunds** - Specify amount in request body
+- **Custom reasons** - Add refund reason in request body
+
+### **Refund Tracking**
+- **Database storage** - All refunds are tracked in the database
+- **Stripe integration** - Refund IDs and amounts stored
+- **Status updates** - Payment status updated to 'refunded'
