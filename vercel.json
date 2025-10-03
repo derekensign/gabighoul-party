@@ -10,7 +10,7 @@
     },
     {
       "src": "api/**/*.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node@3"
     }
   ],
   "routes": [
