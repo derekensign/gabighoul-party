@@ -17,7 +17,7 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd gabighoul-party
+   cd gabyghoul-party
    ```
 
 2. **Install dependencies**
@@ -26,12 +26,11 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    ```
 
 3. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
+   Create a `.env.local` file and add your Stripe keys:
    ```
-   Then edit `.env.local` and add your Stripe publishable key:
-   ```
-   REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
+   REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
+   STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
+   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
    ```
 
 4. **Start the development server**
@@ -42,9 +41,16 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
 ## 💳 Stripe Setup
 
 1. Create a [Stripe account](https://stripe.com)
-2. Get your publishable key from the [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
-3. Add it to your `.env.local` file
-4. For production, use your live publishable key
+2. Get your API keys from the [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
+3. Add them to your `.env.local` file:
+   - `REACT_APP_STRIPE_PUBLISHABLE_KEY` - Your publishable key (starts with pk_test_)
+   - `STRIPE_SECRET_KEY` - Your secret key (starts with sk_test_)
+4. Set up webhooks (optional but recommended):
+   - Go to [Stripe Webhooks](https://dashboard.stripe.com/webhooks)
+   - Add endpoint: `https://your-domain.vercel.app/api/webhook`
+   - Select events: `payment_intent.succeeded`, `payment_intent.payment_failed`
+   - Copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
+5. For production, use your live keys (pk_live_ and sk_live_)
 
 ## 🚀 Deploy to Vercel (Free!)
 
@@ -66,7 +72,7 @@ vercel
 
 ## 🔐 Admin Access
 
-- **Password**: `gabighoul2024`
+- **Password**: `gabyghoul2024`
 - Access the admin panel to view all RSVPs and guest counts
 
 ## 🎨 Customization
@@ -94,10 +100,12 @@ vercel
 
 ## 🛡️ Security Notes
 
-- This is a demo app - in production, you'd want a backend API
-- Payment processing is simulated for demo purposes
-- Admin password is hardcoded (change this for production)
-- RSVP data is stored in localStorage (not persistent across devices)
+- **Real Stripe Integration**: This app now processes real payments through Stripe
+- **Backend API**: Uses Vercel Functions for secure payment processing
+- **Environment Variables**: Keep your Stripe secret keys secure and never commit them
+- **Admin password**: Hardcoded (change this for production)
+- **RSVP data**: Stored in localStorage (not persistent across devices)
+- **Webhooks**: Optional but recommended for production payment confirmations
 
 ## 📄 License
 

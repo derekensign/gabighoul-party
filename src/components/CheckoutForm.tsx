@@ -34,58 +34,53 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     setIsProcessing(true);
     setError(null);
 
-    const cardElement = elements.getElement(CardElement);
-
-    if (!cardElement) {
-      setError('Card element not found');
-      setIsProcessing(false);
-      return;
-    }
-
     try {
-      // Create payment method
-      const { error: pmError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: customerInfo.name,
-          email: customerInfo.email,
-          phone: customerInfo.phone,
+      // Create payment intent on the backend
+      const response = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          amount: amount,
+          customerInfo: customerInfo,
+        }),
       });
 
-      if (pmError) {
-        setError(pmError.message || 'Payment failed');
+      const { client_secret, error: apiError } = await response.json();
+
+      if (apiError || !client_secret) {
+        setError(apiError || "Failed to create payment intent");
         setIsProcessing(false);
         return;
       }
 
-      // In a real app, you would send the payment method to your backend
-      // For demo purposes, we'll simulate a successful payment
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate different outcomes based on card number
-      const cardNumber = paymentMethod.card?.last4;
-      if (cardNumber === '4242') {
-        onSuccess({
-          id: 'pi_demo_' + Date.now(),
-          amount: amount,
-          status: 'succeeded'
+      // Confirm payment with Stripe
+      const { error: confirmError, paymentIntent } =
+        await stripe.confirmCardPayment(client_secret, {
+          payment_method: {
+            card: elements.getElement(CardElement)!,
+            billing_details: {
+              name: customerInfo.name,
+              email: customerInfo.email,
+              phone: customerInfo.phone,
+            },
+          },
         });
-      } else if (cardNumber === '0002') {
-        setError('Your card was declined. Please try a different card.');
-        return;
-      } else {
-        onSuccess({
-          id: 'pi_demo_' + Date.now(),
-          amount: amount,
-          status: 'succeeded'
-        });
-      }
 
+      if (confirmError) {
+        setError(confirmError.message || "Payment failed");
+        onError(confirmError.message || "Payment failed");
+      } else if (paymentIntent.status === "succeeded") {
+        onSuccess(paymentIntent);
+      } else {
+        setError("Payment was not successful");
+        onError("Payment was not successful");
+      }
     } catch (err) {
-      setError('An unexpected error occurred');
-      onError('Payment processing failed');
+      console.error("Payment error:", err);
+      setError("An unexpected error occurred");
+      onError("Payment processing failed");
     } finally {
       setIsProcessing(false);
     }
@@ -111,21 +106,21 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   };
 
   return (
-    <motion.form 
+    <motion.form
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div style={{ marginBottom: '1.5rem' }}>
+      <div style={{ marginBottom: "1.5rem" }}>
         <label className="form-label">Card Information</label>
-        <div 
-          style={{ 
-            padding: '1rem',
-            background: 'rgba(0, 0, 0, 0.8)',
-            border: '2px solid #ff0000',
-            borderRadius: '8px',
-            marginTop: '0.5rem'
+        <div
+          style={{
+            padding: "1rem",
+            background: "rgba(0, 0, 0, 0.8)",
+            border: "2px solid #ff0000",
+            borderRadius: "8px",
+            marginTop: "0.5rem",
           }}
         >
           <CardElement options={cardElementOptions} />
@@ -146,16 +141,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         type="submit"
         disabled={!stripe || isProcessing}
         className="btn"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         {isProcessing ? (
           <>
             <span className="loading"></span> Processing Payment...
           </>
         ) : (
-          <>
-            💀 PAY ${amount} 💀
-          </>
+          <>💀 PAY ${amount / 100} 💀</>
         )}
       </button>
     </motion.form>

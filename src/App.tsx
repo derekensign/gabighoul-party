@@ -41,7 +41,7 @@ const App: React.FC = () => {
 
   // Load RSVPs from localStorage on component mount
   useEffect(() => {
-    const savedRsvps = localStorage.getItem("gabighoul-rsvps");
+    const savedRsvps = localStorage.getItem("gabyghoul-rsvps");
     if (savedRsvps) {
       setRsvps(JSON.parse(savedRsvps));
     }
@@ -49,7 +49,7 @@ const App: React.FC = () => {
 
   // Save RSVPs to localStorage whenever rsvps change
   useEffect(() => {
-    localStorage.setItem("gabighoul-rsvps", JSON.stringify(rsvps));
+    localStorage.setItem("gabyghoul-rsvps", JSON.stringify(rsvps));
   }, [rsvps]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,8 @@ const App: React.FC = () => {
     setShowCheckout(false);
     setMessage({
       type: "success",
-      text: "🎉 RSVP confirmed! Welcome to the nightmare, " + formData.name + "!",
+      text:
+        "🎉 RSVP confirmed! Welcome to the nightmare, " + formData.name + "!",
     });
   };
 
@@ -95,7 +96,7 @@ const App: React.FC = () => {
   };
 
   const handleAdminLogin = () => {
-    if (adminPassword === "gabighoul2024") {
+    if (adminPassword === "gabyghoul2024") {
       setIsAuthenticated(true);
       setAdminPassword("");
     } else {

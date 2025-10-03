@@ -60,15 +60,19 @@ body {
 .title {
   font-family: 'Nosifer', cursive;
   font-size: 4rem;
-  color: #ff0000;
+  color: #ffffff;
   text-shadow: 
-    0 0 10px #ff0000,
-    0 0 20px #ff0000,
-    0 0 30px #ff0000,
-    0 0 40px #ff0000;
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    6px 6px 0px #990000,
+    0 0 15px #ff0000;
   margin-bottom: 1rem;
   animation: glow 2s ease-in-out infinite alternate;
   letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
@@ -81,8 +85,22 @@ body {
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; }
-  to { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000; }
+  from { 
+    text-shadow: 
+      2px 2px 0px #ff0000,
+      4px 4px 0px #cc0000,
+      6px 6px 0px #990000,
+      0 0 15px #ff0000;
+    filter: drop-shadow(0 0 5px #ff0000);
+  }
+  to { 
+    text-shadow: 
+      2px 2px 0px #ff0000,
+      4px 4px 0px #cc0000,
+      6px 6px 0px #990000,
+      0 0 25px #ff0000;
+    filter: drop-shadow(0 0 15px #ff0000);
+  }
 }
 
 /* Party Details */
@@ -106,8 +124,9 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 2rem;
-  background: #0a0a0a;
+  background: transparent;
   padding: 0 1rem;
+  filter: drop-shadow(0 0 10px #ff0000);
 }
 
 .details-title {
