@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion, AnimatePresence } from "framer-motion";
 import { Skull, MapPin, Clock, Users, Ticket, Eye, EyeOff } from "lucide-react";
+import CheckoutForm from "./components/CheckoutForm";
 import "./App.css";
 
 // Stripe public key - replace with your actual Stripe publishable key
@@ -32,6 +33,7 @@ const App: React.FC = () => {
     guests: 1,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -58,40 +60,38 @@ const App: React.FC = () => {
     }));
   };
 
-  const handleRSVPSubmit = async (e: React.FormEvent) => {
+  const handleRSVPSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setMessage(null);
+    setShowCheckout(true);
+  };
 
-    try {
-      // Simulate payment processing
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+  const handlePaymentSuccess = (paymentIntent: any) => {
+    const newRSVP: RSVPData = {
+      id: Date.now().toString(),
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      guests: formData.guests,
+      paymentStatus: "completed",
+      timestamp: new Date().toISOString(),
+    };
 
-      const newRSVP: RSVPData = {
-        id: Date.now().toString(),
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        guests: formData.guests,
-        paymentStatus: "completed",
-        timestamp: new Date().toISOString(),
-      };
+    setRsvps((prev) => [...prev, newRSVP]);
+    setFormData({ name: "", email: "", phone: "", guests: 1 });
+    setShowCheckout(false);
+    setMessage({
+      type: "success",
+      text: "🎉 RSVP confirmed! Welcome to the nightmare, " + formData.name + "!",
+    });
+  };
 
-      setRsvps((prev) => [...prev, newRSVP]);
-      setFormData({ name: "", email: "", phone: "", guests: 1 });
-      setMessage({
-        type: "success",
-        text:
-          "🎉 RSVP confirmed! Welcome to the nightmare, " + formData.name + "!",
-      });
-    } catch (error) {
-      setMessage({
-        type: "error",
-        text: "💀 Something went wrong. Please try again.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handlePaymentError = (error: string) => {
+    setMessage({
+      type: "error",
+      text: "💀 Payment failed: " + error,
+    });
+    setShowCheckout(false);
   };
 
   const handleAdminLogin = () => {
@@ -164,78 +164,106 @@ const App: React.FC = () => {
         >
           <div className="rsvp-form">
             <h3 className="form-title">🎫 SECURE YOUR SPOT IN HELL 🎫</h3>
-            <form onSubmit={handleRSVPSubmit}>
-              <div className="form-group">
-                <label className="form-label">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="Enter your cursed name..."
-                  required
-                />
-              </div>
+            
+            {!showCheckout ? (
+              <form onSubmit={handleRSVPSubmit}>
+                <div className="form-group">
+                  <label className="form-label">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Enter your cursed name..."
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="your.email@domain.com"
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label className="form-label">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="your.email@domain.com"
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label className="form-label">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="(555) 123-4567"
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label className="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="(555) 123-4567"
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label className="form-label">Number of Guests</label>
-                <input
-                  type="number"
-                  name="guests"
-                  value={formData.guests}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  min="1"
-                  max="10"
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label className="form-label">Number of Guests</label>
+                  <input
+                    type="number"
+                    name="guests"
+                    value={formData.guests}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    min="1"
+                    max="10"
+                    required
+                  />
+                </div>
 
-              <button
-                type="submit"
-                className="btn"
-                disabled={isSubmitting}
-                style={{ width: "100%" }}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="loading"></span> Processing...
-                  </>
-                ) : (
-                  <>
-                    <Ticket size={20} style={{ marginRight: "10px" }} />
-                    BUY TICKETS - $25 PER PERSON
-                  </>
-                )}
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  className="btn"
+                  style={{ width: "100%" }}
+                >
+                  <Ticket size={20} style={{ marginRight: "10px" }} />
+                  BUY TICKETS - ${25 * formData.guests} TOTAL
+                </button>
+              </form>
+            ) : (
+              <div>
+                <div style={{ marginBottom: "1rem", padding: "1rem", background: "rgba(255, 0, 0, 0.1)", borderRadius: "8px" }}>
+                  <h4 style={{ color: "#ff6666", marginBottom: "0.5rem" }}>Order Summary</h4>
+                  <p>Name: {formData.name}</p>
+                  <p>Email: {formData.email}</p>
+                  <p>Guests: {formData.guests}</p>
+                  <p style={{ fontWeight: "bold", color: "#ff0000" }}>Total: ${25 * formData.guests}</p>
+                </div>
+                
+                <CheckoutForm
+                  amount={25 * formData.guests * 100} // Convert to cents
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                  customerInfo={{
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone
+                  }}
+                />
+                
+                <button
+                  onClick={() => setShowCheckout(false)}
+                  className="btn"
+                  style={{ 
+                    width: "100%", 
+                    marginTop: "1rem",
+                    background: "transparent",
+                    border: "2px solid #ff0000"
+                  }}
+                >
+                  Back to Form
+                </button>
+              </div>
+            )}
 
             <AnimatePresence>
               {message && (

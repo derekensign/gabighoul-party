@@ -64,11 +64,24 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       // For demo purposes, we'll simulate a successful payment
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      onSuccess({
-        id: 'pi_demo_' + Date.now(),
-        amount: amount,
-        status: 'succeeded'
-      });
+      // Simulate different outcomes based on card number
+      const cardNumber = paymentMethod.card?.last4;
+      if (cardNumber === '4242') {
+        onSuccess({
+          id: 'pi_demo_' + Date.now(),
+          amount: amount,
+          status: 'succeeded'
+        });
+      } else if (cardNumber === '0002') {
+        setError('Your card was declined. Please try a different card.');
+        return;
+      } else {
+        onSuccess({
+          id: 'pi_demo_' + Date.now(),
+          amount: amount,
+          status: 'succeeded'
+        });
+      }
 
     } catch (err) {
       setError('An unexpected error occurred');
