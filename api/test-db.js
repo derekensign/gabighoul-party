@@ -1,5 +1,8 @@
 const { sql } = require('@vercel/postgres');
 
+// Use the available environment variable
+const connectionString = process.env.POSTGRES_URL_NO_SSL || process.env.POSTGRES_URL;
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
