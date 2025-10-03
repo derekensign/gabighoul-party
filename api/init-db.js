@@ -1,5 +1,10 @@
 const { sql } = require('@vercel/postgres');
 
+// Ensure we have the right environment variable
+if (!process.env.POSTGRES_URL && process.env.POSTGRES_URL_NO_SSL) {
+  process.env.POSTGRES_URL = process.env.POSTGRES_URL_NO_SSL;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
