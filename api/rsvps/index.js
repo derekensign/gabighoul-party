@@ -1,10 +1,4 @@
-const { Pool } = require('pg');
-
-// Create connection pool
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
-  ssl: process.env.POSTGRES_URL ? { rejectUnauthorized: false } : false
-});
+const { sql } = require('@vercel/postgres');
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -20,16 +14,17 @@ export default async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       // Get all RSVPs
-      const { rows } = await pool.query('SELECT * FROM rsvps ORDER BY created_at DESC');
+      const { rows } = await sql`SELECT * FROM rsvps ORDER BY created_at DESC`;
       res.status(200).json(rows);
     } else if (req.method === 'POST') {
       // Create new RSVP
       const { name, email, phone, guests, paymentStatus } = req.body;
       
-      const { rows } = await pool.query(
-        'INSERT INTO rsvps (name, email, phone, guests, payment_status, created_at) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *',
-        [name, email, phone, guests, paymentStatus]
-      );
+      const { rows } = await sql`
+        INSERT INTO rsvps (name, email, phone, guests, payment_status, created_at)
+        VALUES (${name}, ${email}, ${phone}, ${guests}, ${paymentStatus}, NOW())
+        RETURNING *
+      `;
       
       res.status(201).json(rows[0]);
     } else {
