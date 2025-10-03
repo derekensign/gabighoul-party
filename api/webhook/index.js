@@ -1,5 +1,20 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { sql } = require("@vercel/postgres");
+const { Client } = require('pg');
+
+async function query(text, params) {
+  const client = new Client({
+    connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
+    ssl: { rejectUnauthorized: false }
+  });
+  
+  try {
+    await client.connect();
+    const result = await client.query(text, params);
+    return result;
+  } finally {
+    await client.end();
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -28,10 +43,10 @@ export default async function handler(req, res) {
       try {
         const metadata = paymentIntent.metadata;
 
-        await sql`
-          INSERT INTO rsvps (name, email, phone, guests, payment_status, stripe_payment_intent_id, created_at)
-          VALUES (${metadata.customer_name}, ${metadata.customer_email}, ${metadata.customer_phone}, 1, 'completed', ${paymentIntent.id}, NOW())
-        `;
+        await query(
+          'INSERT INTO rsvps (name, email, phone, guests, payment_status, stripe_payment_intent_id, created_at) VALUES ($1, $2, $3, $4, $5, $6, NOW())',
+          [metadata.customer_name, metadata.customer_email, metadata.customer_phone, 1, 'completed', paymentIntent.id]
+        );
 
         console.log("RSVP saved to database successfully");
       } catch (dbError) {
