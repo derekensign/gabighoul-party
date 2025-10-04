@@ -244,97 +244,43 @@ const App: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.8 }}
               style={{
                 marginTop: "2rem",
-                padding: "3rem 4rem",
-                background:
-                  "linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(139, 0, 0, 0.2))",
-                border: "3px solid #ff0000",
-                borderRadius: "15px",
                 textAlign: "center",
-                boxShadow:
-                  "0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.1)",
-                position: "relative",
-                overflow: "hidden",
               }}
             >
-              {/* Animated background effect */}
-              <div
+              <p
                 style={{
-                  position: "absolute",
-                  top: "-50%",
-                  left: "-50%",
-                  width: "200%",
-                  height: "200%",
-                  background:
-                    "radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%)",
-                  animation: "pulse 3s ease-in-out infinite",
-                  zIndex: 0,
+                  color: "#ffffff",
+                  fontSize: "1.4rem",
+                  lineHeight: "2.2",
+                  marginBottom: "2rem",
+                  textShadow: "1px 1px 2px #000000, 0 0 10px #ff0000",
+                  fontWeight: "500",
+                  maxWidth: "800px",
+                  margin: "0 auto 2rem auto",
                 }}
-              ></div>
-
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <h3
+              >
+                Join us for GabyGhoul, a horror-themed boat party on Town Lake!
+                <br />
+                We will be celebrating Gaby, Mago, and Eli's October birthdays.
+                <br />
+                Please come in your scariest costume. Drinks and snacks will be
+                <br />
+                provided, but feel free to bring your own as well. After
+                <br />
+                returning to the dock, we will be heading to Coconut Club for an after party.
+                <br />
+                <span
                   style={{
-                    fontFamily: "'Rubik Wet Paint', cursive",
-                    fontSize: "2.2rem",
-                    color: "#ffffff",
-                    marginBottom: "2.5rem",
-                    textShadow:
-                      "2px 2px 0px #ffffff, 4px 4px 0px #ff0000, 6px 6px 0px #8b0000, 0 0 20px #ff0000",
-                    background:
-                      "linear-gradient(45deg, #ff0000, #ff6666, #ff0000)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    animation: "paintDrip 4s ease-in-out infinite",
+                    color: "#ff0000",
+                    fontSize: "1.6rem",
+                    fontWeight: "bold",
+                    textShadow: "2px 2px 0px #ffffff, 0 0 15px #ff0000",
                   }}
                 >
-                  🎃 IMPORTANT PARTY INFO 🎃
-                </h3>
-                <p
-                  style={{
-                    color: "#ffffff",
-                    fontSize: "1.4rem",
-                    lineHeight: "2.2",
-                    marginBottom: "2rem",
-                    textShadow: "1px 1px 2px #000000, 0 0 10px #ff0000",
-                    fontWeight: "500",
-                    maxWidth: "800px",
-                    margin: "0 auto 2rem auto",
-                  }}
-                >
-                  Join us for{" "}
-                  <strong style={{ color: "#ff6666" }}>GabyGhoul</strong>, a
-                  horror-themed boat party on Town Lake!
-                  <br />
-                  We will be celebrating{" "}
-                  <strong style={{ color: "#ff6666" }}>
-                    Gaby, Mago, and Eli's October birthdays
-                  </strong>
-                  .<br />
-                  Please come in your{" "}
-                  <strong style={{ color: "#ff6666" }}>scariest costume</strong>
-                  . Drinks and snacks will be
-                  <br />
-                  provided, but feel free to bring your own as well. After
-                  <br />
-                  returning to the dock, we will be heading to{" "}
-                  <strong style={{ color: "#ff6666" }}>
-                    Coconut Club for an after party
-                  </strong>
-                  .<br />
-                  <span
-                    style={{
-                      color: "#ff0000",
-                      fontSize: "1.6rem",
-                      fontWeight: "bold",
-                      textShadow: "2px 2px 0px #ffffff, 0 0 15px #ff0000",
-                    }}
-                  >
-                    We have a hard limit of 80 guests, so please RSVP as soon as
-                    possible! 🎃💀
-                  </span>
-                </p>
-              </div>
+                  We have a hard limit of 80 guests, so please RSVP as soon as
+                  possible! 🎃💀
+                </span>
+              </p>
             </motion.div>
 
           </div>
