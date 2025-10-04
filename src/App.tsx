@@ -206,7 +206,9 @@ const App: React.FC = () => {
                 width: "180px",
                 height: "auto",
                 filter: "drop-shadow(0 0 15px rgba(255, 0, 0, 0.8))",
+                maxHeight: "90px", // 50% of original ~180px height
               }}
+              className="gaby-mask-responsive"
               onError={(e) => {
                 console.log("Local image not found, using fallback");
                 e.currentTarget.style.display = "none";

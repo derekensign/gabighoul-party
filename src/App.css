@@ -691,6 +691,12 @@ body {
     margin: 1rem;
     padding: 1.5rem;
   }
+
+  /* Mobile responsive gaby mask */
+  .gaby-mask-responsive {
+    width: 90px !important;
+    max-height: 45px !important;
+  }
   
   .detail-item {
     flex-direction: column;
