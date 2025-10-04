@@ -191,6 +191,9 @@ const App: React.FC = () => {
                 width: "180px",
                 height: "auto",
                 filter: "drop-shadow(0 0 15px rgba(255, 0, 0, 0.8))",
+                position: "sticky",
+                top: "20px",
+                zIndex: 1000,
               }}
               onError={(e) => {
                 console.log("Local image not found, using fallback");
@@ -635,10 +638,7 @@ const App: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
         >
-          <p>💀 All October babies and friends welcome 💀</p>
-          <p style={{ fontSize: "0.9rem", marginTop: "0.5rem" }}>
-            Powered by the spirits of the underworld
-          </p>
+          <p>💀 Presented by Degz and Kalimotxo Events 💀</p>
 
           {/* SoundCloud Player */}
           <div
