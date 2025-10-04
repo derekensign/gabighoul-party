@@ -144,10 +144,12 @@ const App: React.FC = () => {
   };
 
   const partyDetails = [
+    { label: "Date", value: "October 25th", icon: <Clock size={20} /> },
     { label: "Boarding Time", value: "9:15 PM", icon: <Clock size={20} /> },
     { label: "Take Off", value: "9:25 PM", icon: <Skull size={20} /> },
     { label: "Return to Dock", value: "11:30 PM", icon: <MapPin size={20} /> },
     { label: "After Party", value: "Coconut Club", icon: <Users size={20} /> },
+    { label: "Price", value: "$40", icon: <Users size={20} /> },
   ];
 
   return (
@@ -335,74 +337,6 @@ const App: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* WhatsApp Group Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
-              style={{
-                marginTop: "2rem",
-                padding: "1.5rem",
-                background: "rgba(37, 211, 102, 0.1)",
-                border: "2px solid #25D366",
-                borderRadius: "10px",
-                textAlign: "center",
-              }}
-            >
-              <h4
-                style={{
-                  fontFamily: "'Rubik Wet Paint', cursive",
-                  fontSize: "1.5rem",
-                  color: "#ffffff",
-                  marginBottom: "1rem",
-                  textShadow:
-                    "1px 1px 0px #ffffff, 2px 2px 0px #25D366, 0 0 10px #25D366",
-                }}
-              >
-                📱 JOIN THE SPOOKY CHAT 📱
-              </h4>
-              <p
-                style={{
-                  color: "#ccffcc",
-                  fontSize: "1.1rem",
-                  lineHeight: "1.6",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                After you RSVP, join our WhatsApp group for party updates,
-                spooky music, and to connect with other Halloween party-goers!
-                Get the latest info and join the pre-party hype! 🎃💀
-              </p>
-              <a
-                href="https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display: "inline-block",
-                  background: "linear-gradient(45deg, #25D366, #128C7E)",
-                  color: "#ffffff",
-                  padding: "1rem 2rem",
-                  borderRadius: "10px",
-                  textDecoration: "none",
-                  fontSize: "1.2rem",
-                  fontWeight: "bold",
-                  boxShadow: "0 0 20px rgba(37, 211, 102, 0.5)",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.05)";
-                  e.currentTarget.style.boxShadow =
-                    "0 0 30px rgba(37, 211, 102, 0.8)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow =
-                    "0 0 20px rgba(37, 211, 102, 0.5)";
-                }}
-              >
-                🎵 JOIN WHATSAPP GROUP 🎵
-              </a>
-            </motion.div>
           </div>
         </motion.div>
 
@@ -470,7 +404,7 @@ const App: React.FC = () => {
                 </div>
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
-                  🪦 BUY TICKETS - $0.50 TOTAL
+                  🪦 BUY TICKETS - $40 TOTAL
                 </button>
               </form>
             ) : (
@@ -490,12 +424,12 @@ const App: React.FC = () => {
                   <p>Email: {formData.email}</p>
                   <p>Guests: {formData.guests}</p>
                   <p style={{ fontWeight: "bold", color: "#ff0000" }}>
-                    Total: $0.50
+                    Total: $40
                   </p>
                 </div>
 
                 <CheckoutForm
-                  amount={50} // $0.50 minimum Stripe charge
+                  amount={4000} // $40.00
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   customerInfo={{
