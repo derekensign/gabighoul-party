@@ -161,10 +161,47 @@ const App: React.FC = () => {
           <h2 className="subtitle-white-outline">SPOOKY CUMPLE BOAT PARTY</h2>
 
           <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={{
+              rotate: [0, 5, -5, 0],
+              scale: [1, 1.05, 1],
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <Skull size={60} color="#ff0000" />
+            <img
+              src="/images/gaby-mask.png"
+              alt="Creepy Doll Mask"
+              style={{
+                width: "120px",
+                height: "auto",
+                filter: "drop-shadow(0 0 10px rgba(255, 0, 0, 0.6))",
+              }}
+              onError={(e) => {
+                console.log("Local image not found, using fallback");
+                e.currentTarget.style.display = "none";
+                const fallback = document.createElement("div");
+                fallback.innerHTML = "🎭";
+                fallback.style.cssText = `
+                  width: 120px;
+                  height: 120px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 60px;
+                  color: #ff0000;
+                `;
+                e.currentTarget.parentNode?.appendChild(fallback);
+              }}
+            />
           </motion.div>
         </motion.header>
 
@@ -578,6 +615,7 @@ const App: React.FC = () => {
                 border: "2px solid #ff0000",
                 boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
               }}
+              title="Halloween Cumbia Remix by Dj Gecko - Spooky Music Player"
             ></iframe>
             <div
               style={{
