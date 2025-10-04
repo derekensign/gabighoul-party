@@ -100,38 +100,13 @@ const App: React.FC = () => {
       if (response.ok) {
         const newRsvp = await response.json();
         setRsvps((prev) => [newRsvp, ...prev]);
-        
-        // Send SMS confirmation
-        try {
-          console.log("Sending SMS confirmation...");
-          const smsResponse = await fetch("/api/send-sms", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              phoneNumber: formData.phone,
-              name: formData.name,
-              guests: formData.guests,
-            }),
-          });
-          
-          if (smsResponse.ok) {
-            console.log("SMS sent successfully");
-          } else {
-            console.error("SMS failed:", await smsResponse.text());
-          }
-        } catch (smsError) {
-          console.error("SMS error:", smsError);
-          // Don't fail the whole process if SMS fails
-        }
-        
+
         setMessage({
           type: "success",
           text:
             "🎉 RSVP confirmed! Welcome to the nightmare, " +
             formData.name +
-            "! Check your phone for party details! 📱",
+            "! Join our WhatsApp group for party updates! 📱",
         });
       } else {
         const errorText = await response.text();
@@ -259,6 +234,68 @@ const App: React.FC = () => {
                 <span className="detail-value">{detail.value}</span>
               </motion.div>
             ))}
+            
+            {/* WhatsApp Group Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              style={{
+                marginTop: "2rem",
+                padding: "1.5rem",
+                background: "rgba(255, 0, 0, 0.1)",
+                border: "2px solid #ff0000",
+                borderRadius: "10px",
+                textAlign: "center"
+              }}
+            >
+              <h4 style={{
+                fontFamily: "'Rubik Wet Paint', cursive",
+                fontSize: "1.5rem",
+                color: "#ffffff",
+                marginBottom: "1rem",
+                textShadow: "1px 1px 0px #ffffff, 2px 2px 0px #ff0000, 0 0 10px #ff0000"
+              }}>
+                📱 JOIN THE SPOOKY CHAT 📱
+              </h4>
+              <p style={{
+                color: "#ffcccc",
+                fontSize: "1.1rem",
+                lineHeight: "1.6",
+                marginBottom: "1.5rem"
+              }}>
+                After you RSVP, join our WhatsApp group for party updates, 
+                spooky music, and to connect with other Halloween party-goers! 
+                Get the latest info and join the pre-party hype! 🎃💀
+              </p>
+              <a
+                href="https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: "inline-block",
+                  background: "linear-gradient(45deg, #25D366, #128C7E)",
+                  color: "#ffffff",
+                  padding: "1rem 2rem",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  boxShadow: "0 0 20px rgba(37, 211, 102, 0.5)",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.boxShadow = "0 0 30px rgba(37, 211, 102, 0.8)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "0 0 20px rgba(37, 211, 102, 0.5)";
+                }}
+              >
+                🎵 JOIN WHATSAPP GROUP 🎵
+              </a>
+            </motion.div>
           </div>
         </motion.div>
 
