@@ -175,11 +175,8 @@ const App: React.FC = () => {
             top: "0px",
             zIndex: 1000,
             background: "rgba(0, 0, 0, 0.8)",
-            border: "2px solid #ff0000",
-            borderRadius: "15px",
             padding: "20px 0",
             textAlign: "center",
-            boxShadow: "0 0 30px rgba(255, 0, 0, 0.5)",
           }}
         >
           <h1 className="title">GABYGHOUL</h1>
