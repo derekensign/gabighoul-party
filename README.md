@@ -8,9 +8,10 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
 - **Party details** with boarding times and location info
 - **RSVP form** with ticket purchase functionality
 - **Stripe payment integration** for secure transactions
+- **SMS confirmations** via Twilio for instant party details
 - **Admin panel** to view RSVP list and manage attendees
 - **Responsive design** that works on all devices
-- **Local storage** for RSVP data persistence
+- **Database storage** with Vercel Postgres for persistent RSVP data
 
 ## 🛠️ Setup
 
@@ -32,6 +33,9 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
    REACT_APP_ADMIN_PASSWORD=your_admin_password_here
+   TWILIO_ACCOUNT_SID=AC_your_twilio_account_sid_here
+   TWILIO_AUTH_TOKEN=your_twilio_auth_token_here
+   TWILIO_PHONE_NUMBER=+1234567890
    ```
 
 4. **Start the development server**
@@ -52,6 +56,19 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    - Select events: `payment_intent.succeeded`, `payment_intent.payment_failed`
    - Copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
 5. For production, use your live keys (pk_live_ and sk_live_)
+
+## 📱 Twilio SMS Setup
+
+1. Create a [Twilio account](https://www.twilio.com/try-twilio)
+2. Get your credentials from the [Twilio Console](https://console.twilio.com/):
+   - `TWILIO_ACCOUNT_SID` - Your Account SID (starts with AC)
+   - `TWILIO_AUTH_TOKEN` - Your Auth Token
+3. Purchase a phone number:
+   - Go to [Phone Numbers > Manage > Buy a number](https://console.twilio.com/us1/develop/phone-numbers/manage/search)
+   - Choose a US number with SMS capabilities
+   - Copy the number to `TWILIO_PHONE_NUMBER` (include +1)
+4. Add all three variables to your `.env.local` file
+5. **Free tier**: $15 credit = ~2,000 SMS messages!
 
 ## 🚀 Deploy to Vercel (Free!)
 

@@ -100,12 +100,38 @@ const App: React.FC = () => {
       if (response.ok) {
         const newRsvp = await response.json();
         setRsvps((prev) => [newRsvp, ...prev]);
+        
+        // Send SMS confirmation
+        try {
+          console.log("Sending SMS confirmation...");
+          const smsResponse = await fetch("/api/send-sms", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              phoneNumber: formData.phone,
+              name: formData.name,
+              guests: formData.guests,
+            }),
+          });
+          
+          if (smsResponse.ok) {
+            console.log("SMS sent successfully");
+          } else {
+            console.error("SMS failed:", await smsResponse.text());
+          }
+        } catch (smsError) {
+          console.error("SMS error:", smsError);
+          // Don't fail the whole process if SMS fails
+        }
+        
         setMessage({
           type: "success",
           text:
             "🎉 RSVP confirmed! Welcome to the nightmare, " +
             formData.name +
-            "!",
+            "! Check your phone for party details! 📱",
         });
       } else {
         const errorText = await response.text();
@@ -146,7 +172,7 @@ const App: React.FC = () => {
     { label: "Boarding Time", value: "9:15 PM", icon: <Clock size={20} /> },
     { label: "Take Off", value: "9:25 PM", icon: <Skull size={20} /> },
     { label: "Return to Dock", value: "11:30 PM", icon: <MapPin size={20} /> },
-    { label: "After Party", value: "X Club", icon: <Users size={20} /> },
+    { label: "After Party", value: "Coconut Club", icon: <Users size={20} /> },
   ];
 
   return (
