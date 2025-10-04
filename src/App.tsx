@@ -244,7 +244,7 @@ const App: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.8 }}
               style={{
                 marginTop: "2rem",
-                textAlign: "center",
+                textAlign: "left",
               }}
             >
               <p
@@ -267,7 +267,8 @@ const App: React.FC = () => {
                 <br />
                 provided, but feel free to bring your own as well. After
                 <br />
-                returning to the dock, we will be heading to Coconut Club for an after party.
+                returning to the dock, we will be heading to Coconut Club for an
+                after party.
                 <br />
                 <span
                   style={{
@@ -278,11 +279,10 @@ const App: React.FC = () => {
                   }}
                 >
                   We have a hard limit of 80 guests, so please RSVP as soon as
-                  possible! 🎃💀
+                  possible!
                 </span>
               </p>
             </motion.div>
-
           </div>
         </motion.div>
 
