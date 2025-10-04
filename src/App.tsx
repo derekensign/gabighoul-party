@@ -65,12 +65,22 @@ const App: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "guests" ? parseInt(value) || 1 : value,
+      [name]: name === "guests" ? (value === "" ? "" : parseInt(value) || "") : value,
     }));
   };
 
   const handleRSVPSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate guests field
+    if (!formData.guests || formData.guests < 1 || formData.guests > 10) {
+      setMessage({
+        type: "error",
+        text: "Please enter a valid number of guests (1-10)",
+      });
+      return;
+    }
+    
     setMessage(null);
     setShowCheckout(true);
   };
@@ -352,14 +362,13 @@ const App: React.FC = () => {
                     value={formData.guests}
                     onChange={handleInputChange}
                     className="form-input"
-                    min="1"
                     max="10"
                     required
                   />
                 </div>
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
-                  🪦 BUY TICKETS - ${formData.guests * 40} TOTAL
+                  🪦 BUY TICKETS - ${(formData.guests || 0) * 40} TOTAL
                 </button>
               </form>
             ) : (
@@ -379,12 +388,12 @@ const App: React.FC = () => {
                   <p>Email: {formData.email}</p>
                   <p>Guests: {formData.guests}</p>
                   <p style={{ fontWeight: "bold", color: "#ff0000" }}>
-                    Total: ${formData.guests * 40}
+                    Total: ${(formData.guests || 0) * 40}
                   </p>
                 </div>
 
                 <CheckoutForm
-                  amount={formData.guests * 4000} // $40.00 per guest
+                  amount={(formData.guests || 0) * 4000} // $40.00 per guest
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   customerInfo={{
