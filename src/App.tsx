@@ -174,8 +174,7 @@ const App: React.FC = () => {
             position: "sticky",
             top: "0px",
             zIndex: 1000,
-            background:
-              "linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #990000 100%)",
+            background: "rgba(0, 0, 0, 0.8)",
             padding: "20px 0",
             textAlign: "center",
           }}
@@ -243,7 +242,7 @@ const App: React.FC = () => {
             </h2>
             <h3
               className="subtitle-white-outline"
-              style={{ textAlign: "center" }}
+              style={{ textAlign: "center", fontSize: "1.2rem" }}
             >
               CELEBRATING OCTOBER BIRTHDAYS
             </h3>
