@@ -174,7 +174,8 @@ const App: React.FC = () => {
             position: "sticky",
             top: "0px",
             zIndex: 1000,
-            background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+            background:
+              "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
             padding: "20px 0",
             textAlign: "center",
           }}
@@ -206,7 +207,6 @@ const App: React.FC = () => {
                 width: "180px",
                 height: "auto",
                 filter: "drop-shadow(0 0 15px rgba(255, 0, 0, 0.8))",
-                maxHeight: "90px", // 50% of original ~180px height
               }}
               className="gaby-mask-responsive"
               onError={(e) => {
@@ -235,8 +235,16 @@ const App: React.FC = () => {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <div className="party-details">
-            <h2 className="subtitle-white-outline" style={{ textAlign: "center" }}>SPOOKY BOAT PARTY</h2>
-            <h3 className="subtitle-white-outline" style={{ textAlign: "center" }}>
+            <h2
+              className="subtitle-white-outline"
+              style={{ textAlign: "center" }}
+            >
+              SPOOKY BOAT PARTY
+            </h2>
+            <h3
+              className="subtitle-white-outline"
+              style={{ textAlign: "center" }}
+            >
               CELEBRATING OCTOBER BIRTHDAYS
             </h3>
             {partyDetails.map((detail, index) => (

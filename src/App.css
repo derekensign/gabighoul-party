@@ -695,7 +695,7 @@ body {
   /* Mobile responsive gaby mask */
   .gaby-mask-responsive {
     width: 90px !important;
-    max-height: 45px !important;
+    height: auto !important;
   }
   
   .detail-item {
