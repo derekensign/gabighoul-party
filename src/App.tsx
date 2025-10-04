@@ -175,7 +175,7 @@ const App: React.FC = () => {
             top: "0px",
             zIndex: 1000,
             background:
-              "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+              "linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #990000 100%)",
             padding: "20px 0",
             textAlign: "center",
           }}
