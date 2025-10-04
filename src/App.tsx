@@ -223,8 +223,8 @@ const App: React.FC = () => {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <div className="party-details">
-            <h2 className="subtitle-white-outline">SPOOKY BOAT PARTY</h2>
-            <h3 className="subtitle-white-outline">
+            <h2 className="subtitle-white-outline" style={{ textAlign: "center" }}>SPOOKY BOAT PARTY</h2>
+            <h3 className="subtitle-white-outline" style={{ textAlign: "center" }}>
               CELEBRATING OCTOBER BIRTHDAYS
             </h3>
             {partyDetails.map((detail, index) => (
