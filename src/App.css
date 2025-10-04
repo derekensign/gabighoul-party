@@ -109,13 +109,19 @@ body {
     3px 3px 0px #ff0000,
     4px 4px 0px #8b0000,
     0 0 10px #ff0000;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   letter-spacing: 3px;
   background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: paintDrip 4s ease-in-out infinite;
+}
+
+.subtitle-white-outline h3 {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  margin-top: 0;
 }
 
 /* FONT OPTION 2: Griffy - More Gothic */

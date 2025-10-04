@@ -147,7 +147,6 @@ const App: React.FC = () => {
     { label: "Take Off", value: "9:25 PM", icon: <Skull size={20} /> },
     { label: "Return to Dock", value: "11:30 PM", icon: <MapPin size={20} /> },
     { label: "After Party", value: "X Club", icon: <Users size={20} /> },
-    { label: "Host", value: "Gabyghoul", icon: <Skull size={20} /> },
   ];
 
   return (
@@ -160,7 +159,10 @@ const App: React.FC = () => {
           transition={{ duration: 1 }}
         >
           <h1 className="title">GABYGHOUL</h1>
-          <h2 className="subtitle-white-outline">SPOOKY CUMPLE BOAT PARTY</h2>
+          <h2 className="subtitle-white-outline">SPOOKY BOAT PARTY</h2>
+          <h3 className="subtitle-white-outline">
+            CELEBRATING OCTOBER BIRTHDAYS
+          </h3>
 
           <motion.div
             animate={{
