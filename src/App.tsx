@@ -174,7 +174,7 @@ const App: React.FC = () => {
             position: "sticky",
             top: "0px",
             zIndex: 1000,
-            background: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #ff4444",
+            background: "rgba(0, 0, 0, 0.8)",
             padding: "20px 0",
             textAlign: "center",
           }}
