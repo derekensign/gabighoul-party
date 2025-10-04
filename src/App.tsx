@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { motion, AnimatePresence } from "framer-motion";
 import { Skull, MapPin, Clock, Users, Eye, EyeOff } from "lucide-react";
 import CheckoutForm from "./components/CheckoutForm";
+import gabyMask from "./images/gaby-mask.png";
 import "./App.css";
 
 // Stripe public key - replace with your actual Stripe publishable key
@@ -178,12 +179,12 @@ const App: React.FC = () => {
             }}
           >
             <img
-              src="/images/gaby-mask.png"
+              src={gabyMask}
               alt="Creepy Doll Mask"
               style={{
-                width: "120px",
+                width: "180px",
                 height: "auto",
-                filter: "drop-shadow(0 0 10px rgba(255, 0, 0, 0.6))",
+                filter: "drop-shadow(0 0 15px rgba(255, 0, 0, 0.8))",
               }}
               onError={(e) => {
                 console.log("Local image not found, using fallback");
