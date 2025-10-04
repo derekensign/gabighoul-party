@@ -264,11 +264,12 @@ const App: React.FC = () => {
                 We will be celebrating Gaby, Mago, and Eli's October birthdays.
                 <br />
                 Please come in your scariest costume. Drinks and snacks will be
+                provided,
                 <br />
-                provided, but feel free to bring your own as well. After
+                but feel free to bring your own as well. After returning to the
+                dock,
                 <br />
-                returning to the dock, we will be heading to Coconut Club for an
-                after party.
+                we will be heading to Coconut Club for an after party.
                 <br />
                 <span
                   style={{
@@ -350,7 +351,7 @@ const App: React.FC = () => {
                 </div>
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
-                  🪦 BUY TICKETS - $40 TOTAL
+                  🪦 BUY TICKETS - ${formData.guests * 40} TOTAL
                 </button>
               </form>
             ) : (
@@ -370,12 +371,12 @@ const App: React.FC = () => {
                   <p>Email: {formData.email}</p>
                   <p>Guests: {formData.guests}</p>
                   <p style={{ fontWeight: "bold", color: "#ff0000" }}>
-                    Total: $40
+                    Total: ${formData.guests * 40}
                   </p>
                 </div>
 
                 <CheckoutForm
-                  amount={4000} // $40.00
+                  amount={formData.guests * 4000} // $40.00 per guest
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   customerInfo={{
@@ -504,7 +505,7 @@ const App: React.FC = () => {
                   zIndex: 10,
                 }}
               >
-                📱 Click to open in Maps
+                📱 Click to open in Google Maps
               </div>
             </a>
             <p
