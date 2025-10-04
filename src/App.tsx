@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fontOption, setFontOption] = useState(1);
+  const [musicPlaying, setMusicPlaying] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -604,20 +605,62 @@ const App: React.FC = () => {
             >
               🎵 SPOOKY VIBES 🎵
             </h3>
-            <iframe
-              width="100%"
-              height="300"
-              scrolling="no"
-              frameBorder="no"
-              allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A901256329&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-              style={{
-                borderRadius: "10px",
-                border: "2px solid #ff0000",
-                boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
-              }}
-              title="Halloween Cumbia Remix by Dj Gecko - Spooky Music Player"
-            ></iframe>
+
+            {!musicPlaying ? (
+              <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+                <button
+                  onClick={() => setMusicPlaying(true)}
+                  style={{
+                    background: "linear-gradient(45deg, #ff0000, #8b0000)",
+                    border: "2px solid #ff0000",
+                    borderRadius: "10px",
+                    color: "#ffffff",
+                    padding: "1rem 2rem",
+                    fontSize: "1.2rem",
+                    fontFamily: "'Butcherman', cursive",
+                    cursor: "pointer",
+                    boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0 30px rgba(255, 0, 0, 0.8)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0 20px rgba(255, 0, 0, 0.5)";
+                  }}
+                >
+                  🎵 PLAY SPOOKY MUSIC 🎵
+                </button>
+                <p
+                  style={{
+                    color: "#ff6666",
+                    marginTop: "0.5rem",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  Tap to start the Halloween soundtrack!
+                </p>
+              </div>
+            ) : (
+              <iframe
+                width="100%"
+                height="300"
+                scrolling="no"
+                frameBorder="no"
+                allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A901256329&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+                style={{
+                  borderRadius: "10px",
+                  border: "2px solid #ff0000",
+                  boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
+                }}
+                title="Halloween Cumbia Remix by Dj Gecko - Spooky Music Player"
+              ></iframe>
+            )}
             <div
               style={{
                 fontSize: "10px",
