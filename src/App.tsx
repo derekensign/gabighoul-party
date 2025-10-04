@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion, AnimatePresence } from "framer-motion";
-import { Skull, MapPin, Clock, Users, Ticket, Eye, EyeOff } from "lucide-react";
+import { Skull, MapPin, Clock, Users, Eye, EyeOff } from "lucide-react";
 import CheckoutForm from "./components/CheckoutForm";
 import "./App.css";
 
@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fontOption, setFontOption] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -370,16 +371,16 @@ const App: React.FC = () => {
                 boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
               }}
             >
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.1234567890123!2d-97.7567!3d30.2672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b50a12345678%3A0x1234567890abcdef!2s208%20Barton%20Springs%20Rd%2C%20Austin%2C%20TX%2078704!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Halloween Boat Party Location"
-              ></iframe>
+               <iframe
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.1234567890123!2d-97.7567!3d30.2672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b50a12345678%3A0x1234567890abcdef!2s208%20Barton%20Springs%20Rd%2C%20Austin%2C%20TX%2078704!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                 width="100%"
+                 height="100%"
+                 style={{ border: 0 }}
+                 allowFullScreen
+                 loading="lazy"
+                 referrerPolicy="no-referrer-when-downgrade"
+                 title="Halloween Boat Party Location - 208 Barton Springs Road, Austin, TX"
+               ></iframe>
             </div>
             <p
               style={{
@@ -563,6 +564,7 @@ const App: React.FC = () => {
                 href="https://soundcloud.com/djgecko77"
                 title="Dj Gecko"
                 target="_blank"
+                rel="noreferrer"
                 style={{ color: "#cccccc", textDecoration: "none" }}
               >
                 Dj Gecko
@@ -572,6 +574,7 @@ const App: React.FC = () => {
                 href="https://soundcloud.com/djgecko77/halloween-cumbia-remix-dj-gecko"
                 title="Halloween Cumbia Remix - Dj Gecko"
                 target="_blank"
+                rel="noreferrer"
                 style={{ color: "#cccccc", textDecoration: "none" }}
               >
                 Halloween Cumbia Remix - Dj Gecko
