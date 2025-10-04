@@ -182,8 +182,10 @@ const App: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              position: "sticky",
+              position: "fixed",
               top: "20px",
+              left: "50%",
+              transform: "translateX(-50%)",
               zIndex: 1000,
             }}
           >
