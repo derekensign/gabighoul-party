@@ -170,10 +170,6 @@ const App: React.FC = () => {
           }}
         >
           <h1 className="title">GABYGHOUL</h1>
-          <h2 className="subtitle-white-outline">SPOOKY BOAT PARTY</h2>
-          <h3 className="subtitle-white-outline">
-            CELEBRATING OCTOBER BIRTHDAYS
-          </h3>
 
           <motion.div
             animate={{
@@ -227,7 +223,10 @@ const App: React.FC = () => {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <div className="party-details">
-            <h3 className="details-title">💀 PARTY DETAILS 💀</h3>
+            <h2 className="subtitle-white-outline">SPOOKY BOAT PARTY</h2>
+            <h3 className="subtitle-white-outline">
+              CELEBRATING OCTOBER BIRTHDAYS
+            </h3>
             {partyDetails.map((detail, index) => (
               <motion.div
                 key={detail.label}
