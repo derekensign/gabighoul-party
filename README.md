@@ -33,9 +33,8 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
    STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
    REACT_APP_ADMIN_PASSWORD=your_admin_password_here
-   TWILIO_ACCOUNT_SID=AC_your_twilio_account_sid_here
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token_here
-   TWILIO_PHONE_NUMBER=+1234567890
+   SENDGRID_API_KEY=SG.your_sendgrid_api_key_here
+   SENDGRID_FROM_EMAIL=your_verified_email@domain.com
    ```
 
 4. **Start the development server**
@@ -57,18 +56,19 @@ A spooky horror-themed React app for Gaby's Halloween boat party with RSVP funct
    - Copy the webhook secret to `STRIPE_WEBHOOK_SECRET`
 5. For production, use your live keys (pk_live_ and sk_live_)
 
-## 📱 Twilio SMS Setup
+## 📱 SendGrid SMS Setup
 
-1. Create a [Twilio account](https://www.twilio.com/try-twilio)
-2. Get your credentials from the [Twilio Console](https://console.twilio.com/):
-   - `TWILIO_ACCOUNT_SID` - Your Account SID (starts with AC)
-   - `TWILIO_AUTH_TOKEN` - Your Auth Token
-3. Purchase a phone number:
-   - Go to [Phone Numbers > Manage > Buy a number](https://console.twilio.com/us1/develop/phone-numbers/manage/search)
-   - Choose a US number with SMS capabilities
-   - Copy the number to `TWILIO_PHONE_NUMBER` (include +1)
-4. Add all three variables to your `.env.local` file
-5. **Free tier**: $15 credit = ~2,000 SMS messages!
+1. Create a [SendGrid account](https://signup.sendgrid.com/) (100% free)
+2. Get your API key:
+   - Go to [Settings > API Keys](https://app.sendgrid.com/settings/api_keys)
+   - Create a new API key with "Full Access" permissions
+   - Copy the key to `SENDGRID_API_KEY` (starts with SG.)
+3. Verify your sender email:
+   - Go to [Settings > Sender Authentication](https://app.sendgrid.com/settings/sender_auth)
+   - Verify a single sender email (your email address)
+   - Copy the verified email to `SENDGRID_FROM_EMAIL`
+4. Add both variables to your `.env.local` file
+5. **Free tier**: 100 SMS/month = Perfect for your party!
 
 ## 🚀 Deploy to Vercel (Free!)
 
