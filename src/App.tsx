@@ -174,7 +174,7 @@ const App: React.FC = () => {
             position: "sticky",
             top: "0px",
             zIndex: 1000,
-            background: "rgba(0, 0, 0, 0.8)",
+            background: "#ff4444",
             padding: "20px 0",
             textAlign: "center",
           }}
