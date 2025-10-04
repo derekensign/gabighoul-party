@@ -159,7 +159,7 @@ const App: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="title">GABYGHOUL'S</h1>
+          <h1 className="title">GABYGHOUL</h1>
           <h2 className="subtitle-white-outline">SPOOKY CUMPLE BOAT PARTY</h2>
 
           <motion.div
