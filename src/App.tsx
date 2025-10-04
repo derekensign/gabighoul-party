@@ -234,36 +234,115 @@ const App: React.FC = () => {
                 <span className="detail-value">{detail.value}</span>
               </motion.div>
             ))}
-            
-            {/* WhatsApp Group Section */}
+
+            {/* Party Description Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
               style={{
                 marginTop: "2rem",
-                padding: "1.5rem",
-                background: "rgba(255, 0, 0, 0.1)",
-                border: "2px solid #ff0000",
-                borderRadius: "10px",
-                textAlign: "center"
+                padding: "2.5rem",
+                background: "linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(139, 0, 0, 0.2))",
+                border: "3px solid #ff0000",
+                borderRadius: "15px",
+                textAlign: "center",
+                boxShadow: "0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.1)",
+                position: "relative",
+                overflow: "hidden"
               }}
             >
-              <h4 style={{
-                fontFamily: "'Rubik Wet Paint', cursive",
-                fontSize: "1.5rem",
-                color: "#ffffff",
-                marginBottom: "1rem",
-                textShadow: "1px 1px 0px #ffffff, 2px 2px 0px #ff0000, 0 0 10px #ff0000"
-              }}>
+              {/* Animated background effect */}
+              <div style={{
+                position: "absolute",
+                top: "-50%",
+                left: "-50%",
+                width: "200%",
+                height: "200%",
+                background: "radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%)",
+                animation: "pulse 3s ease-in-out infinite",
+                zIndex: 0
+              }}></div>
+              
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <h3
+                  style={{
+                    fontFamily: "'Rubik Wet Paint', cursive",
+                    fontSize: "2.2rem",
+                    color: "#ffffff",
+                    marginBottom: "1.5rem",
+                    textShadow:
+                      "2px 2px 0px #ffffff, 4px 4px 0px #ff0000, 6px 6px 0px #8b0000, 0 0 20px #ff0000",
+                    background: "linear-gradient(45deg, #ff0000, #ff6666, #ff0000)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    animation: "paintDrip 4s ease-in-out infinite"
+                  }}
+                >
+                  🎃 IMPORTANT PARTY INFO 🎃
+                </h3>
+                <p
+                  style={{
+                    color: "#ffffff",
+                    fontSize: "1.4rem",
+                    lineHeight: "1.8",
+                    marginBottom: "2rem",
+                    textShadow: "1px 1px 2px #000000, 0 0 10px #ff0000",
+                    fontWeight: "500"
+                  }}
+                >
+                  Join us for <strong style={{ color: "#ff6666" }}>GabyGhoul</strong>, a horror-themed boat party on Town Lake!<br/>
+                  We will be celebrating <strong style={{ color: "#ff6666" }}>Gaby, Mago, and Eli's October birthdays</strong>.<br/>
+                  Please come in your <strong style={{ color: "#ff6666" }}>scariest costume</strong>. Drinks and snacks will be<br/>
+                  provided, but feel free to bring your own as well. After<br/>
+                  returning to the dock, we will be heading to <strong style={{ color: "#ff6666" }}>Coconut Club for an after party</strong>.<br/>
+                  <span style={{ 
+                    color: "#ff0000", 
+                    fontSize: "1.6rem", 
+                    fontWeight: "bold",
+                    textShadow: "2px 2px 0px #ffffff, 0 0 15px #ff0000"
+                  }}>
+                    We have a hard limit of 80 guests, so please RSVP as soon as possible! 🎃💀
+                  </span>
+                </p>
+              </div>
+            </motion.div>
+
+            {/* WhatsApp Group Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              style={{
+                marginTop: "2rem",
+                padding: "1.5rem",
+                background: "rgba(37, 211, 102, 0.1)",
+                border: "2px solid #25D366",
+                borderRadius: "10px",
+                textAlign: "center",
+              }}
+            >
+              <h4
+                style={{
+                  fontFamily: "'Rubik Wet Paint', cursive",
+                  fontSize: "1.5rem",
+                  color: "#ffffff",
+                  marginBottom: "1rem",
+                  textShadow:
+                    "1px 1px 0px #ffffff, 2px 2px 0px #25D366, 0 0 10px #25D366",
+                }}
+              >
                 📱 JOIN THE SPOOKY CHAT 📱
               </h4>
-              <p style={{
-                color: "#ffcccc",
-                fontSize: "1.1rem",
-                lineHeight: "1.6",
-                marginBottom: "1.5rem"
-              }}>
+              <p
+                style={{
+                  color: "#ccffcc",
+                  fontSize: "1.1rem",
+                  lineHeight: "1.6",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 After you RSVP, join our WhatsApp group for party updates, 
                 spooky music, and to connect with other Halloween party-goers! 
                 Get the latest info and join the pre-party hype! 🎃💀
@@ -282,15 +361,17 @@ const App: React.FC = () => {
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                   boxShadow: "0 0 20px rgba(37, 211, 102, 0.5)",
-                  transition: "all 0.3s ease"
+                  transition: "all 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "scale(1.05)";
-                  e.currentTarget.style.boxShadow = "0 0 30px rgba(37, 211, 102, 0.8)";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 30px rgba(37, 211, 102, 0.8)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "0 0 20px rgba(37, 211, 102, 0.5)";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 20px rgba(37, 211, 102, 0.5)";
                 }}
               >
                 🎵 JOIN WHATSAPP GROUP 🎵
