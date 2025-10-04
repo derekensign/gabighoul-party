@@ -1,5 +1,5 @@
 /* Horror Theme Styles */
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&family=Griffy&family=Creepy&family=Fredericka+the+Great&family=UnifrakturMaguntia&family=Metamorphous&family=Chiller&family=Jolly+Lodger&family=Kalam&family=Rubik+Glitch&family=Rubik+Wet+Paint&display=swap');
 
 * {
   margin: 0;
@@ -57,8 +57,127 @@ body {
   z-index: 10;
 }
 
+/* FONT OPTION 1: Nosifer (Current) - Now with Glitch Effect */
 .title {
   font-family: 'Nosifer', cursive;
+  font-size: 4rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    6px 6px 0px #990000,
+    0 0 15px #ff0000,
+    0 0 30px #ff0000;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate, glitch 2s ease-in-out infinite;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #00ff00, #ff0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* WHITE OUTLINE OPTIONS */
+.title-white-outline {
+  font-family: 'Nosifer', cursive;
+  font-size: 4rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ffffff,
+    4px 4px 0px #ffffff,
+    6px 6px 0px #ffffff,
+    8px 8px 0px #ff0000,
+    10px 10px 0px #cc0000,
+    0 0 15px #ff0000;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle-white-outline {
+  font-family: 'Rubik Wet Paint', cursive;
+  font-size: 1.7rem;
+  font-weight: normal;
+  color: #ffffff;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    3px 3px 0px #ff0000,
+    4px 4px 0px #8b0000,
+    0 0 10px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: paintDrip 4s ease-in-out infinite;
+}
+
+/* FONT OPTION 2: Griffy - More Gothic */
+.title-option-2 {
+  font-family: 'Griffy', cursive;
+  font-size: 4rem;
+  color: #ffffff;
+  text-shadow: 
+    3px 3px 0px #8b0000,
+    6px 6px 0px #660000,
+    9px 9px 0px #440000,
+    0 0 20px #ff0000;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+  letter-spacing: 4px;
+  background: linear-gradient(45deg, #ff0000, #8b0000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* FONT OPTION 3: Fredericka the Great - Elegant Horror */
+.title-option-3 {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 4rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    6px 6px 0px #990000,
+    0 0 15px #ff0000;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* FONT OPTION 4: UnifrakturMaguntia - Medieval Gothic */
+.title-option-4 {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: 4rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #8b0000,
+    4px 4px 0px #660000,
+    6px 6px 0px #440000,
+    0 0 20px #ff0000;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite alternate;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* FONT OPTION 5: Metamorphous - Mysterious */
+.title-option-5 {
+  font-family: 'Metamorphous', cursive;
   font-size: 4rem;
   color: #ffffff;
   text-shadow: 
@@ -75,13 +194,236 @@ body {
   background-clip: text;
 }
 
+/* SUBTITLE - Now using white outline style */
 .subtitle {
-  font-family: 'Butcherman', cursive;
+  font-family: 'Rubik Wet Paint', cursive;
+  font-size: 1.7rem;
+  font-weight: normal;
+  color: #ffffff;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    3px 3px 0px #ff0000,
+    4px 4px 0px #8b0000,
+    0 0 10px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: paintDrip 4s ease-in-out infinite;
+}
+
+/* SUBTITLE FONT OPTION 2: Creepster - More Readable */
+.subtitle-option-2 {
+  font-family: 'Creepster', cursive;
   font-size: 1.5rem;
-  color: #ff6666;
-  text-shadow: 0 0 10px #ff0000;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    0 0 15px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SUBTITLE FONT OPTION 3: Griffy - Gothic but Clear */
+.subtitle-option-3 {
+  font-family: 'Griffy', cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #8b0000,
+    4px 4px 0px #660000,
+    0 0 15px #ff0000;
   margin-bottom: 2rem;
   letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SUBTITLE FONT OPTION 4: Fredericka the Great - Elegant and Clear */
+.subtitle-option-4 {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    0 0 15px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SUBTITLE FONT OPTION 5: Metamorphous - Mysterious but Readable */
+.subtitle-option-5 {
+  font-family: 'Metamorphous', cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    0 0 15px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SUBTITLE FONT OPTION 6: Chiller - Blood Dripping Horror */
+.subtitle-option-6 {
+  font-family: 'Chiller', cursive;
+  font-size: 2rem;
+  color: #ff0000;
+  text-shadow: 
+    3px 3px 0px #8b0000,
+    6px 6px 0px #660000,
+    0 0 20px #ff0000,
+    0 0 40px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 4px;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: bloodDrip 3s ease-in-out infinite;
+}
+
+/* SUBTITLE FONT OPTION 7: Jolly Lodger - Spooky Fun */
+.subtitle-option-7 {
+  font-family: 'Jolly Lodger', cursive;
+  font-size: 1.8rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #8b0000,
+    6px 6px 0px #660000,
+    0 0 15px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #ff6666, #cc0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* SUBTITLE FONT OPTION 8: Kalam - Handwritten Horror */
+.subtitle-option-8 {
+  font-family: 'Kalam', cursive;
+  font-size: 1.6rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #8b0000,
+    4px 4px 0px #660000,
+    0 0 15px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: rotate(-1deg);
+}
+
+/* SUBTITLE FONT OPTION 9: Rubik Glitch - Digital Horror */
+.subtitle-option-9 {
+  font-family: 'Rubik Glitch', cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 
+    2px 2px 0px #ff0000,
+    4px 4px 0px #cc0000,
+    0 0 15px #ff0000,
+    0 0 30px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff0000, #00ff00, #ff0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glitch 2s ease-in-out infinite;
+}
+
+/* SUBTITLE FONT OPTION 10: Rubik Wet Paint - Bloody Mess */
+.subtitle-option-10 {
+  font-family: 'Rubik Wet Paint', cursive;
+  font-size: 1.7rem;
+  color: #ff0000;
+  text-shadow: 
+    3px 3px 0px #8b0000,
+    6px 6px 0px #660000,
+    9px 9px 0px #440000,
+    0 0 20px #ff0000;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: paintDrip 4s ease-in-out infinite;
+}
+
+/* Animations for the spooky effects */
+@keyframes bloodDrip {
+  0%, 100% { 
+    transform: translateY(0px);
+    filter: drop-shadow(0 0 5px #ff0000);
+  }
+  50% { 
+    transform: translateY(2px);
+    filter: drop-shadow(0 0 15px #ff0000);
+  }
+}
+
+@keyframes glitch {
+  0%, 100% { 
+    transform: translateX(0px);
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    transform: translateX(-2px);
+    filter: hue-rotate(90deg);
+  }
+  50% { 
+    transform: translateX(2px);
+    filter: hue-rotate(180deg);
+  }
+  75% { 
+    transform: translateX(-1px);
+    filter: hue-rotate(270deg);
+  }
+}
+
+@keyframes paintDrip {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 5px #ff0000);
+  }
+  25% { 
+    transform: translateY(1px) rotate(0.5deg);
+    filter: drop-shadow(0 0 10px #ff0000);
+  }
+  50% { 
+    transform: translateY(2px) rotate(-0.5deg);
+    filter: drop-shadow(0 0 15px #ff0000);
+  }
+  75% { 
+    transform: translateY(1px) rotate(0.3deg);
+    filter: drop-shadow(0 0 10px #ff0000);
+  }
 }
 
 @keyframes glow {
@@ -118,7 +460,7 @@ body {
 }
 
 .party-details::before {
-  content: '💀';
+  content: '';
   position: absolute;
   top: -15px;
   left: 50%;
@@ -130,12 +472,23 @@ body {
 }
 
 .details-title {
-  font-family: 'Butcherman', cursive;
+  font-family: 'Rubik Wet Paint', cursive;
   font-size: 2rem;
-  color: #ff0000;
+  font-weight: normal;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 10px #ff0000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    3px 3px 0px #ff0000,
+    4px 4px 0px #8b0000,
+    0 0 10px #ff0000;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: paintDrip 4s ease-in-out infinite;
 }
 
 .detail-item {
@@ -174,17 +527,28 @@ body {
   border-radius: 15px;
   padding: 2rem;
   margin: 2rem auto;
-  max-width: 600px;
+  max-width: 800px;
   box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
 }
 
 .form-title {
-  font-family: 'Butcherman', cursive;
+  font-family: 'Rubik Wet Paint', cursive;
   font-size: 2rem;
-  color: #ff0000;
+  font-weight: normal;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 2rem;
-  text-shadow: 0 0 10px #ff0000;
+  text-shadow: 
+    1px 1px 0px #ffffff,
+    2px 2px 0px #ffffff,
+    3px 3px 0px #ff0000,
+    4px 4px 0px #8b0000,
+    0 0 10px #ff0000;
+  background: linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: paintDrip 4s ease-in-out infinite;
 }
 
 .form-group {

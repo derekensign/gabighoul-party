@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [fontOption, setFontOption] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,7 +75,7 @@ const App: React.FC = () => {
   const handlePaymentSuccess = async (paymentIntent: any) => {
     try {
       console.log("Attempting to save RSVP to database...");
-      
+
       // Save RSVP to database via API
       const response = await fetch("/api/rsvps", {
         method: "POST",
@@ -156,7 +157,8 @@ const App: React.FC = () => {
           transition={{ duration: 1 }}
         >
           <h1 className="title">GABYGHOUL'S</h1>
-          <h2 className="subtitle">HALLOWEEN BOAT PARTY</h2>
+          <h2 className="subtitle-white-outline">SPOOKY CUMPLE BOAT PARTY</h2>
+
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -198,7 +200,7 @@ const App: React.FC = () => {
           transition={{ duration: 1, delay: 1 }}
         >
           <div className="rsvp-form">
-            <h3 className="form-title">🎫 SECURE YOUR SPOT IN HELL 🎫</h3>
+            <h3 className="form-title">🪦 SECURE YOUR SPOT IN HELL 🪦</h3>
 
             {!showCheckout ? (
               <form onSubmit={handleRSVPSubmit}>
@@ -256,8 +258,7 @@ const App: React.FC = () => {
                 </div>
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
-                  <Ticket size={20} style={{ marginRight: "10px" }} />
-                  BUY TICKETS - $0.50 TOTAL
+                  🪦 BUY TICKETS - $0.50 TOTAL
                 </button>
               </form>
             ) : (
@@ -319,6 +320,77 @@ const App: React.FC = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        </motion.div>
+
+        {/* Location Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.5 }}
+        >
+          <div
+            style={{
+              background: "rgba(0, 0, 0, 0.9)",
+              border: "2px solid #ff0000",
+              borderRadius: "15px",
+              padding: "2rem",
+              margin: "2rem auto",
+              maxWidth: "800px",
+              boxShadow: "0 0 30px rgba(255, 0, 0, 0.5)",
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: "'Rubik Wet Paint', cursive",
+                fontSize: "2rem",
+                fontWeight: "normal",
+                color: "#ffffff",
+                textAlign: "center",
+                marginBottom: "1.5rem",
+                textShadow:
+                  "1px 1px 0px #ffffff, 2px 2px 0px #ffffff, 3px 3px 0px #ff0000, 4px 4px 0px #8b0000, 0 0 10px #ff0000",
+                background:
+                  "linear-gradient(45deg, #ff0000, #cc0000, #990000, #660000)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              PORTAL INTO HELL
+            </h3>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "300px",
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "2px solid #ff0000",
+                boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
+              }}
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3445.1234567890123!2d-97.7567!3d30.2672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8644b50a12345678%3A0x1234567890abcdef!2s208%20Barton%20Springs%20Rd%2C%20Austin%2C%20TX%2078704!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Halloween Boat Party Location"
+              ></iframe>
+            </div>
+            <p
+              style={{
+                textAlign: "center",
+                marginTop: "1rem",
+                color: "#ff6666",
+                fontSize: "1.1rem",
+              }}
+            >
+              208 Barton Springs Road, Austin, TX 78704
+            </p>
           </div>
         </motion.div>
 
@@ -440,6 +512,72 @@ const App: React.FC = () => {
           <p style={{ fontSize: "0.9rem", marginTop: "0.5rem" }}>
             Powered by the spirits of the underworld
           </p>
+
+          {/* SoundCloud Player */}
+          <div
+            style={{
+              marginTop: "2rem",
+              maxWidth: "800px",
+              margin: "2rem auto 0",
+            }}
+          >
+            <h3
+              style={{
+                color: "#ff6666",
+                marginBottom: "1rem",
+                fontFamily: "'Butcherman', cursive",
+                textShadow: "0 0 10px #ff0000",
+              }}
+            >
+              🎵 SPOOKY VIBES 🎵
+            </h3>
+            <iframe
+              width="100%"
+              height="300"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A901256329&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+              style={{
+                borderRadius: "10px",
+                border: "2px solid #ff0000",
+                boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
+              }}
+            ></iframe>
+            <div
+              style={{
+                fontSize: "10px",
+                color: "#cccccc",
+                lineBreak: "anywhere",
+                wordBreak: "normal",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                fontFamily:
+                  "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
+                fontWeight: "100",
+                marginTop: "0.5rem",
+              }}
+            >
+              <a
+                href="https://soundcloud.com/djgecko77"
+                title="Dj Gecko"
+                target="_blank"
+                style={{ color: "#cccccc", textDecoration: "none" }}
+              >
+                Dj Gecko
+              </a>{" "}
+              ·{" "}
+              <a
+                href="https://soundcloud.com/djgecko77/halloween-cumbia-remix-dj-gecko"
+                title="Halloween Cumbia Remix - Dj Gecko"
+                target="_blank"
+                style={{ color: "#cccccc", textDecoration: "none" }}
+              >
+                Halloween Cumbia Remix - Dj Gecko
+              </a>
+            </div>
+          </div>
         </motion.footer>
       </div>
     </Elements>

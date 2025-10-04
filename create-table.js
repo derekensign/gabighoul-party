@@ -1,14 +1,25 @@
-const { Client } = require('pg');
+require("dotenv").config({ path: ".env.local" });
+const { Client } = require("pg");
 
 async function createTable() {
+  console.log("POSTGRES_URL exists:", !!process.env.POSTGRES_URL);
+  console.log("POSTGRES_URL_NO_SSL exists:", !!process.env.POSTGRES_URL_NO_SSL);
+
+  const connectionString =
+    process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL;
+  console.log(
+    "Using connection string:",
+    connectionString ? "Found" : "Not found"
+  );
+
   const client = new Client({
-    connectionString: process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
-    ssl: { rejectUnauthorized: false }
+    connectionString: connectionString,
+    ssl: { rejectUnauthorized: false },
   });
 
   try {
     await client.connect();
-    console.log('Connected to database');
+    console.log("Connected to database");
 
     // Create the rsvps table
     await client.query(`
@@ -27,16 +38,19 @@ async function createTable() {
       )
     `);
 
-    console.log('✅ Table created successfully!');
+    console.log("✅ Table created successfully!");
 
     // Create indexes
-    await client.query('CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)');
-    
-    console.log('✅ Indexes created successfully!');
+    await client.query(
+      "CREATE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email)"
+    );
+    await client.query(
+      "CREATE INDEX IF NOT EXISTS idx_rsvps_created_at ON rsvps(created_at)"
+    );
 
+    console.log("✅ Indexes created successfully!");
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error("❌ Error:", error);
   } finally {
     await client.end();
   }
