@@ -155,11 +155,19 @@ const App: React.FC = () => {
   return (
     <Elements stripe={stripePromise}>
       <div className="app">
-        <motion.header
-          className="header"
+        {/* Sticky Header Section */}
+        <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
+          style={{
+            position: "sticky",
+            top: "0px",
+            zIndex: 1000,
+            background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+            padding: "20px 0",
+            textAlign: "center",
+          }}
         >
           <h1 className="title">GABYGHOUL</h1>
           <h2 className="subtitle-white-outline">SPOOKY BOAT PARTY</h2>
@@ -182,11 +190,7 @@ const App: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              position: "fixed",
-              top: "20px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 1000,
+              marginTop: "20px",
             }}
           >
             <img
@@ -215,7 +219,7 @@ const App: React.FC = () => {
               }}
             />
           </motion.div>
-        </motion.header>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 50 }}
