@@ -1,12 +1,28 @@
-const { sql } = require('@vercel/postgres');
+const { Client } = require("pg");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+async function query(text, params) {
+  const client = new Client({
+    connectionString:
+      process.env.POSTGRES_URL || process.env.POSTGRES_URL_NO_SSL,
+    ssl: { rejectUnauthorized: false },
+  });
+
+  try {
+    await client.connect();
+    const result = await client.query(text, params);
+    return result;
+  } finally {
+    await client.end();
+  }
+}
 
 // Ensure we have the right environment variable
 if (!process.env.POSTGRES_URL && process.env.POSTGRES_URL_NO_SSL) {
   process.env.POSTGRES_URL = process.env.POSTGRES_URL_NO_SSL;
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -29,9 +45,10 @@ export default async function handler(req, res) {
 
   try {
     // Get RSVP details
-    const { rows } = await sql`
-      SELECT * FROM rsvps WHERE id = ${rsvpId}
-    `;
+    const { rows } = await query(
+      "SELECT * FROM rsvps WHERE id = $1",
+      [rsvpId]
+    );
     
     if (rows.length === 0) {
       return res.status(404).json({ message: 'RSVP not found' });
@@ -50,14 +67,10 @@ export default async function handler(req, res) {
     });
     
     // Update RSVP status in database
-    await sql`
-      UPDATE rsvps 
-      SET payment_status = 'refunded', 
-          stripe_refund_id = ${refund.id},
-          refund_amount = ${refund.amount},
-          updated_at = NOW()
-      WHERE id = ${rsvpId}
-    `;
+    await query(
+      "UPDATE rsvps SET payment_status = 'refunded', stripe_refund_id = $1, refund_amount = $2, updated_at = NOW() WHERE id = $3",
+      [refund.id, refund.amount, rsvpId]
+    );
     
     res.status(200).json({
       message: 'Refund processed successfully',
@@ -82,3 +95,5 @@ export default async function handler(req, res) {
     }
   }
 }
+
+export default handler;
