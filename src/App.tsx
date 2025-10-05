@@ -246,7 +246,7 @@ const App: React.FC = () => {
     { label: "Take Off", value: "9:25 PM", icon: <Skull size={20} /> },
     { label: "Return to Dock", value: "11:30 PM", icon: <MapPin size={20} /> },
     { label: "After Party", value: "Coconut Club", icon: <Users size={20} /> },
-    { label: "Price", value: "$0.50", icon: <Users size={20} /> },
+    { label: "Price", value: "$40", icon: <Users size={20} /> },
   ];
 
   return (
@@ -485,7 +485,7 @@ const App: React.FC = () => {
                 </div>
 
                 <button type="submit" className="btn" style={{ width: "100%" }}>
-                  🪦 BUY TICKETS - ${(formData.guests || 0) * 0.50} TOTAL
+                  🪦 BUY TICKETS - ${(formData.guests || 0) * 40} TOTAL
                 </button>
               </form>
             ) : (
@@ -505,12 +505,12 @@ const App: React.FC = () => {
                   <p>Email: {formData.email}</p>
                   <p>Guests: {formData.guests}</p>
                   <p style={{ fontWeight: "bold", color: "#ff0000" }}>
-                    Total: ${(formData.guests || 0) * 0.50}
+                    Total: ${(formData.guests || 0) * 40}
                   </p>
                 </div>
 
                 <CheckoutForm
-                  amount={(formData.guests || 0) * 50} // $0.50 per guest
+                  amount={(formData.guests || 0) * 4000} // $40.00 per guest
                   onSuccess={handlePaymentSuccess}
                   onError={handlePaymentError}
                   customerInfo={{
