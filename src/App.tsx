@@ -155,6 +155,45 @@ const App: React.FC = () => {
     }
   };
 
+  const handleRefund = async (rsvpId: number) => {
+    if (!confirm("Are you sure you want to refund this RSVP? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/rsvps/${rsvpId}/refund`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reason: "requested_by_admin",
+        }),
+      });
+
+      if (response.ok) {
+        setMessage({ type: "success", text: "💀 RSVP refunded successfully!" });
+        // Refresh the RSVP list
+        const rsvpResponse = await fetch("/api/rsvps");
+        if (rsvpResponse.ok) {
+          const rsvpData = await rsvpResponse.json();
+          setRsvps(rsvpData);
+        }
+      } else {
+        const errorData = await response.json();
+        setMessage({ 
+          type: "error", 
+          text: `💀 Refund failed: ${errorData.error || "Unknown error"}` 
+        });
+      }
+    } catch (error) {
+      setMessage({ 
+        type: "error", 
+        text: `💀 Refund failed: ${error}` 
+      });
+    }
+  };
+
   const partyDetails = [
     { label: "Date", value: "October 25th", icon: <Clock size={20} /> },
     { label: "Boarding Time", value: "9:15 PM", icon: <Clock size={20} /> },
@@ -619,16 +658,52 @@ const App: React.FC = () => {
                           className="rsvp-item"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            gap: "1rem",
+                          }}
                         >
-                          <h4>{rsvp.name}</h4>
-                          <p>Email: {rsvp.email}</p>
-                          <p>Phone: {rsvp.phone}</p>
-                          <p>Guests: {rsvp.guests}</p>
-                          <p>Status: {rsvp.paymentStatus}</p>
-                          <p>
-                            RSVP Date:{" "}
-                            {new Date(rsvp.timestamp).toLocaleDateString()}
-                          </p>
+                          <div style={{ flex: 1 }}>
+                            <h4>{rsvp.name}</h4>
+                            <p>Email: {rsvp.email}</p>
+                            <p>Phone: {rsvp.phone}</p>
+                            <p>Guests: {rsvp.guests}</p>
+                            <p>Status: {rsvp.paymentStatus}</p>
+                            <p>
+                              RSVP Date:{" "}
+                              {new Date(rsvp.timestamp).toLocaleDateString()}
+                            </p>
+                          </div>
+                          {rsvp.paymentStatus === "completed" && (
+                            <button
+                              onClick={() => handleRefund(rsvp.id)}
+                              style={{
+                                background: "linear-gradient(45deg, #ff0000, #8b0000)",
+                                border: "1px solid #ff0000",
+                                borderRadius: "5px",
+                                color: "#ffffff",
+                                padding: "0.5rem 1rem",
+                                fontSize: "0.9rem",
+                                cursor: "pointer",
+                                boxShadow: "0 0 10px rgba(255, 0, 0, 0.3)",
+                                transition: "all 0.3s ease",
+                                alignSelf: "flex-start",
+                                marginTop: "0.5rem",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = "scale(1.05)";
+                                e.currentTarget.style.boxShadow = "0 0 15px rgba(255, 0, 0, 0.5)";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = "scale(1)";
+                                e.currentTarget.style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.3)";
+                              }}
+                            >
+                              💀 REFUND RSVP 💀
+                            </button>
+                          )}
                         </motion.div>
                       ))
                     )}
