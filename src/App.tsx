@@ -686,13 +686,13 @@ const App: React.FC = () => {
                             <p>Email: {rsvp.email}</p>
                             <p>Phone: {rsvp.phone}</p>
                             <p>Guests: {rsvp.guests}</p>
-                            <p>Status: {rsvp.paymentStatus}</p>
+                            <p>Status: {rsvp.paymentStatus} {rsvp.stripe_payment_intent_id ? '💳' : '🧪'}</p>
                             <p>
                               RSVP Date:{" "}
                               {new Date(rsvp.timestamp).toLocaleDateString()}
                             </p>
                           </div>
-                          {rsvp.paymentStatus === "completed" && (
+                          {rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id && (
                             <button
                               onClick={() => handleRefund(rsvp.id)}
                               style={{
