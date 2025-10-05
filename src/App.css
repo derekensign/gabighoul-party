@@ -788,6 +788,6 @@ body {
 
 /* Add padding to admin panel for scrollbar spacing */
 .admin-panel {
+  padding-left: 20px !important;
   padding-right: 20px !important;
-  margin-right: 10px;
 }
