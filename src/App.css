@@ -741,3 +741,53 @@ body {
   border: 2px solid #ff0000;
   color: #ff0000;
 }
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin: 20px 0; /* Add spacing outside of boxes */
+  border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff4444 0%, #8b0000 50%, #ff4444 100%);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 0 10px rgba(255, 68, 68, 0.5),
+    inset 0 0 10px rgba(255, 68, 68, 0.3);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff6666 0%, #aa0000 50%, #ff6666 100%);
+  box-shadow: 
+    0 0 20px rgba(255, 68, 68, 0.8),
+    inset 0 0 15px rgba(255, 68, 68, 0.5);
+  transform: scale(1.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #ff8888 0%, #cc0000 50%, #ff8888 100%);
+  box-shadow: 
+    0 0 25px rgba(255, 68, 68, 1),
+    inset 0 0 20px rgba(255, 68, 68, 0.7);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ff4444 rgba(0, 0, 0, 0.3);
+}
+
+/* Add padding to admin panel for scrollbar spacing */
+.admin-panel {
+  padding-right: 20px !important;
+  margin-right: 10px;
+}
