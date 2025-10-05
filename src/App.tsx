@@ -696,8 +696,8 @@ const App: React.FC = () => {
                 <div>
                   <h3 className="form-title">👻 RSVP LIST 👻</h3>
                   <p style={{ color: "#ff6666", marginBottom: "1rem" }}>
-                    Total RSVPs: {rsvps.length} | Total Guests:{" "}
-                    {rsvps.reduce((sum, rsvp) => sum + rsvp.guests, 0)}
+                    Total RSVPs: {rsvps.filter(rsvp => rsvp.paymentStatus === "completed").length} | Total Guests:{" "}
+                    {rsvps.filter(rsvp => rsvp.paymentStatus === "completed").reduce((sum, rsvp) => sum + rsvp.guests, 0)}
                   </p>
                   <div className="rsvp-list">
                     {rsvps.length === 0 ? (
