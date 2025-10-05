@@ -45,6 +45,7 @@ const App: React.FC = () => {
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
+    whatsappLink?: string;
   } | null>(null);
 
   // Load RSVPs from API on component mount
@@ -120,6 +121,7 @@ const App: React.FC = () => {
             "🎉 RSVP confirmed! Welcome to the nightmare, " +
             formData.name +
             "! Join our WhatsApp group for party updates! 📱",
+          whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS"
         });
       } else {
         const errorText = await response.text();
@@ -495,6 +497,37 @@ const App: React.FC = () => {
                   exit={{ opacity: 0, y: -20 }}
                 >
                   {message.text}
+                  {message.whatsappLink && (
+                    <div style={{ marginTop: "1rem" }}>
+                      <a
+                        href={message.whatsappLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: "inline-block",
+                          background: "linear-gradient(45deg, #25D366, #128C7E)",
+                          color: "white",
+                          padding: "0.75rem 1.5rem",
+                          borderRadius: "25px",
+                          textDecoration: "none",
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          boxShadow: "0 4px 15px rgba(37, 211, 102, 0.3)",
+                          transition: "all 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = "scale(1.05)";
+                          e.currentTarget.style.boxShadow = "0 6px 20px rgba(37, 211, 102, 0.4)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = "scale(1)";
+                          e.currentTarget.style.boxShadow = "0 4px 15px rgba(37, 211, 102, 0.3)";
+                        }}
+                      >
+                        💬 Join WhatsApp Group
+                      </a>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
