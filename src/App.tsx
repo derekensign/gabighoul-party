@@ -155,8 +155,12 @@ const App: React.FC = () => {
     }
   };
 
-  const handleRefund = async (rsvpId: number) => {
-    if (!confirm("Are you sure you want to refund this RSVP? This action cannot be undone.")) {
+  const handleRefund = async (rsvpId: string) => {
+    const shouldRefund = window.confirm(
+      "Are you sure you want to refund this RSVP? This action cannot be undone."
+    );
+
+    if (!shouldRefund) {
       return;
     }
 
@@ -181,15 +185,15 @@ const App: React.FC = () => {
         }
       } else {
         const errorData = await response.json();
-        setMessage({ 
-          type: "error", 
-          text: `💀 Refund failed: ${errorData.error || "Unknown error"}` 
+        setMessage({
+          type: "error",
+          text: `💀 Refund failed: ${errorData.error || "Unknown error"}`,
         });
       }
     } catch (error) {
-      setMessage({ 
-        type: "error", 
-        text: `💀 Refund failed: ${error}` 
+      setMessage({
+        type: "error",
+        text: `💀 Refund failed: ${error}`,
       });
     }
   };
@@ -680,7 +684,8 @@ const App: React.FC = () => {
                             <button
                               onClick={() => handleRefund(rsvp.id)}
                               style={{
-                                background: "linear-gradient(45deg, #ff0000, #8b0000)",
+                                background:
+                                  "linear-gradient(45deg, #ff0000, #8b0000)",
                                 border: "1px solid #ff0000",
                                 borderRadius: "5px",
                                 color: "#ffffff",
@@ -694,11 +699,13 @@ const App: React.FC = () => {
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = "scale(1.05)";
-                                e.currentTarget.style.boxShadow = "0 0 15px rgba(255, 0, 0, 0.5)";
+                                e.currentTarget.style.boxShadow =
+                                  "0 0 15px rgba(255, 0, 0, 0.5)";
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = "scale(1)";
-                                e.currentTarget.style.boxShadow = "0 0 10px rgba(255, 0, 0, 0.3)";
+                                e.currentTarget.style.boxShadow =
+                                  "0 0 10px rgba(255, 0, 0, 0.3)";
                               }}
                             >
                               💀 REFUND RSVP 💀
