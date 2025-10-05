@@ -18,8 +18,11 @@ interface RSVPData {
   email: string;
   phone: string;
   guests: number;
-  paymentStatus: "pending" | "completed" | "failed";
+  paymentStatus: "pending" | "completed" | "failed" | "refunded";
   timestamp: string;
+  stripe_payment_intent_id?: string | null;
+  stripe_refund_id?: string | null;
+  refund_amount?: number | null;
 }
 
 const App: React.FC = () => {
