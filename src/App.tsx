@@ -159,13 +159,15 @@ const App: React.FC = () => {
     const shouldRefund = window.confirm(
       "Are you sure you want to refund this RSVP? This action cannot be undone."
     );
-
+    
     if (!shouldRefund) {
       return;
     }
 
+    console.log("Starting refund process for RSVP ID:", rsvpId);
+
     try {
-      const response = await fetch(`/api/rsvps/${rsvpId}/refund`, {
+      const response = await fetch(`/api/refund-rsvp/${rsvpId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +177,12 @@ const App: React.FC = () => {
         }),
       });
 
+      console.log("Refund API response status:", response.status);
+      console.log("Refund API response ok:", response.ok);
+
       if (response.ok) {
+        const refundData = await response.json();
+        console.log("Refund successful:", refundData);
         setMessage({ type: "success", text: "💀 RSVP refunded successfully!" });
         // Refresh the RSVP list
         const rsvpResponse = await fetch("/api/rsvps");
@@ -185,12 +192,14 @@ const App: React.FC = () => {
         }
       } else {
         const errorData = await response.json();
+        console.log("Refund failed:", errorData);
         setMessage({
           type: "error",
           text: `💀 Refund failed: ${errorData.error || "Unknown error"}`,
         });
       }
     } catch (error) {
+      console.log("Refund error:", error);
       setMessage({
         type: "error",
         text: `💀 Refund failed: ${error}`,
