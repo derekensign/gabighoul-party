@@ -145,6 +145,8 @@ const App: React.FC = () => {
 
   const handleAdminLogin = () => {
     const correctPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+    console.log("Admin password from env:", correctPassword);
+    console.log("Entered password:", adminPassword);
     if (adminPassword === correctPassword) {
       setIsAuthenticated(true);
       setAdminPassword("");
@@ -174,7 +176,6 @@ const App: React.FC = () => {
             position: "sticky",
             top: "0px",
             zIndex: 1000,
-            background: "#1a0a0a",
             padding: "20px 0",
             textAlign: "center",
           }}
