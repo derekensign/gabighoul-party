@@ -167,7 +167,7 @@ const App: React.FC = () => {
     console.log("Starting refund process for RSVP ID:", rsvpId);
 
     try {
-      const response = await fetch(`/api/refund-rsvp`, {
+      const response = await fetch(`/api/refund-rsvp?v=${Date.now()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
