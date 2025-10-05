@@ -159,7 +159,7 @@ const App: React.FC = () => {
     const shouldRefund = window.confirm(
       "Are you sure you want to refund this RSVP? This action cannot be undone."
     );
-    
+
     if (!shouldRefund) {
       return;
     }
@@ -167,7 +167,7 @@ const App: React.FC = () => {
     console.log("Starting refund process for RSVP ID:", rsvpId);
 
     try {
-      const response = await fetch(`/api/rsvps/${rsvpId}`, {
+      const response = await fetch(`/api/rsvps/id?id=${rsvpId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -180,7 +180,10 @@ const App: React.FC = () => {
       if (response.ok) {
         const deleteData = await response.json();
         console.log("RSVP deleted and refunded:", deleteData);
-        setMessage({ type: "success", text: `💀 RSVP refunded and deleted! Status: ${deleteData.refundStatus}` });
+        setMessage({
+          type: "success",
+          text: `💀 RSVP refunded and deleted! Status: ${deleteData.refundStatus}`,
+        });
         // Refresh the RSVP list
         const rsvpResponse = await fetch("/api/rsvps");
         if (rsvpResponse.ok) {
