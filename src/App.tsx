@@ -48,6 +48,12 @@ const App: React.FC = () => {
     whatsappLink?: string;
   } | null>(null);
 
+  // Guest limit configuration
+  const GUEST_LIMIT = 80;
+  const currentGuestCount = rsvps.filter(rsvp => rsvp.paymentStatus === "completed").reduce((sum, rsvp) => sum + rsvp.guests, 0);
+  const remainingSpots = GUEST_LIMIT - currentGuestCount;
+  const isSoldOut = remainingSpots <= 0;
+
   // Load RSVPs from API on component mount
   useEffect(() => {
     const fetchRsvps = async () => {
@@ -76,11 +82,29 @@ const App: React.FC = () => {
   const handleRSVPSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Check if sold out
+    if (isSoldOut) {
+      setMessage({
+        type: "error",
+        text: "🎃 SOLD OUT! All 80 spots have been claimed. The nightmare is full!",
+      });
+      return;
+    }
+    
     // Validate guests field
     if (!formData.guests || formData.guests < 1 || formData.guests > 10) {
       setMessage({
         type: "error",
         text: "Please enter a valid number of guests (1-10)",
+      });
+      return;
+    }
+    
+    // Check if this RSVP would exceed the limit
+    if (formData.guests > remainingSpots) {
+      setMessage({
+        type: "error",
+        text: `🎃 Only ${remainingSpots} spots remaining! Please reduce your guest count.`,
       });
       return;
     }
@@ -382,9 +406,42 @@ const App: React.FC = () => {
           transition={{ duration: 1, delay: 1 }}
         >
           <div className="rsvp-form">
-            <h3 className="form-title">🪦 SECURE YOUR SPOT IN HELL 🪦</h3>
+            <h3 className="form-title">
+              {isSoldOut ? "💀 SOLD OUT - HELL IS FULL 💀" : "🪦 SECURE YOUR SPOT IN HELL 🪦"}
+            </h3>
+            
+            {!isSoldOut && (
+              <p style={{ 
+                color: "#ff6666", 
+                textAlign: "center", 
+                marginBottom: "1rem",
+                fontSize: "1rem",
+                fontWeight: "bold"
+              }}>
+                🎃 {remainingSpots} spots remaining out of {GUEST_LIMIT} 🎃
+              </p>
+            )}
 
-            {!showCheckout ? (
+            {isSoldOut ? (
+              <div style={{
+                textAlign: "center",
+                padding: "2rem",
+                background: "rgba(255, 0, 0, 0.1)",
+                border: "2px solid #ff0000",
+                borderRadius: "10px",
+                color: "#ff6666"
+              }}>
+                <h4 style={{ marginBottom: "1rem", color: "#ff0000" }}>
+                  🎃 THE NIGHTMARE IS FULL! 🎃
+                </h4>
+                <p style={{ marginBottom: "1rem" }}>
+                  All 80 spots have been claimed by brave souls ready to face the horror.
+                </p>
+                <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+                  Follow us on social media for updates on future spooky events!
+                </p>
+              </div>
+            ) : !showCheckout ? (
               <form onSubmit={handleRSVPSubmit}>
                 <div className="form-group">
                   <label className="form-label">Full Name</label>
@@ -433,7 +490,7 @@ const App: React.FC = () => {
                     value={formData.guests}
                     onChange={handleInputChange}
                     className="form-input"
-                    max="10"
+                    max={Math.min(10, remainingSpots)}
                     required
                   />
                 </div>
