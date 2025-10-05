@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     if (req.method === "GET") {
       // Get all RSVPs
       const { rows } = await query(
-        "SELECT * FROM rsvps ORDER BY created_at DESC"
+        "SELECT *, payment_status as \"paymentStatus\", created_at as timestamp FROM rsvps ORDER BY created_at DESC"
       );
       res.status(200).json(rows);
     } else if (req.method === "POST") {
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       const { name, email, phone, guests, paymentStatus } = req.body;
 
       const { rows } = await query(
-        "INSERT INTO rsvps (name, email, phone, guests, payment_status, created_at) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *",
+        "INSERT INTO rsvps (name, email, phone, guests, payment_status, created_at) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *, payment_status as \"paymentStatus\", created_at as timestamp",
         [name, email, phone, guests, paymentStatus]
       );
 
