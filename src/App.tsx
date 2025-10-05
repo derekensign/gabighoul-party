@@ -50,7 +50,7 @@ const App: React.FC = () => {
 
   // Guest limit configuration
   const GUEST_LIMIT = 80;
-  const currentGuestCount = rsvps.filter(rsvp => rsvp.paymentStatus === "completed").reduce((sum, rsvp) => sum + rsvp.guests, 0);
+  const currentGuestCount = rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).reduce((sum, rsvp) => sum + rsvp.guests, 0);
   const remainingSpots = GUEST_LIMIT - currentGuestCount;
   const isSoldOut = remainingSpots <= 0;
 
@@ -410,17 +410,6 @@ const App: React.FC = () => {
               {isSoldOut ? "💀 SOLD OUT - HELL IS FULL 💀" : "🪦 SECURE YOUR SPOT IN HELL 🪦"}
             </h3>
             
-            {!isSoldOut && (
-              <p style={{ 
-                color: "#ff6666", 
-                textAlign: "center", 
-                marginBottom: "1rem",
-                fontSize: "1rem",
-                fontWeight: "bold"
-              }}>
-                🎃 {remainingSpots} spots remaining out of {GUEST_LIMIT} 🎃
-              </p>
-            )}
 
             {isSoldOut ? (
               <div style={{
@@ -753,16 +742,18 @@ const App: React.FC = () => {
                 <div>
                   <h3 className="form-title">👻 RSVP LIST 👻</h3>
                   <p style={{ color: "#ff6666", marginBottom: "1rem" }}>
-                    Total RSVPs: {rsvps.filter(rsvp => rsvp.paymentStatus === "completed").length} | Total Guests:{" "}
-                    {rsvps.filter(rsvp => rsvp.paymentStatus === "completed").reduce((sum, rsvp) => sum + rsvp.guests, 0)}
+                    Total RSVPs: {rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).length} | Total Guests:{" "}
+                    {rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).reduce((sum, rsvp) => sum + rsvp.guests, 0)}
+                    <br />
+                    🎃 {GUEST_LIMIT - rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).reduce((sum, rsvp) => sum + rsvp.guests, 0)} spots remaining out of {GUEST_LIMIT} 🎃
                   </p>
                   <div className="rsvp-list">
-                    {rsvps.length === 0 ? (
+                    {rsvps.filter(rsvp => rsvp.stripe_payment_intent_id).length === 0 ? (
                       <p style={{ color: "#666", textAlign: "center" }}>
-                        No RSVPs yet... The crypt is empty.
+                        No real RSVPs yet... The crypt is empty.
                       </p>
                     ) : (
-                      rsvps.map((rsvp) => (
+                      rsvps.filter(rsvp => rsvp.stripe_payment_intent_id).map((rsvp) => (
                         <motion.div
                           key={rsvp.id}
                           className="rsvp-item"
