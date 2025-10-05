@@ -39,11 +39,11 @@ async function handler(req, res) {
       res.status(200).json(rows);
     } else if (req.method === "POST") {
       // Create new RSVP
-      const { name, email, phone, guests, paymentStatus } = req.body;
+      const { name, email, phone, guests, paymentStatus, stripe_payment_intent_id } = req.body;
 
       const { rows } = await query(
-        "INSERT INTO rsvps (name, email, phone, guests, payment_status, created_at) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *, payment_status as \"paymentStatus\", created_at as timestamp",
-        [name, email, phone, guests, paymentStatus]
+        "INSERT INTO rsvps (name, email, phone, guests, payment_status, stripe_payment_intent_id, created_at) VALUES ($1, $2, $3, $4, $5, $6, NOW()) RETURNING *, payment_status as \"paymentStatus\", created_at as timestamp",
+        [name, email, phone, guests, paymentStatus, stripe_payment_intent_id]
       );
 
       res.status(201).json(rows[0]);

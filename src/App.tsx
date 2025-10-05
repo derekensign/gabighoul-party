@@ -105,6 +105,7 @@ const App: React.FC = () => {
           phone: formData.phone,
           guests: formData.guests,
           paymentStatus: "completed",
+          stripe_payment_intent_id: paymentIntent.id,
         }),
       });
 
