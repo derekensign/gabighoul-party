@@ -167,22 +167,25 @@ const App: React.FC = () => {
     console.log("Starting refund process for RSVP ID:", rsvpId);
 
     try {
-      const response = await fetch(`/api/rsvps/id?id=${rsvpId}`, {
-        method: "DELETE",
+      const response = await fetch(`/api/refund`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          rsvpId: rsvpId,
+        }),
       });
 
       console.log("Refund API response status:", response.status);
       console.log("Refund API response ok:", response.ok);
 
       if (response.ok) {
-        const deleteData = await response.json();
-        console.log("RSVP deleted and refunded:", deleteData);
+        const refundData = await response.json();
+        console.log("RSVP refunded:", refundData);
         setMessage({
           type: "success",
-          text: `💀 RSVP refunded and deleted! Status: ${deleteData.refundStatus}`,
+          text: `💀 RSVP refunded successfully! Refund ID: ${refundData.refundId}`,
         });
         // Refresh the RSVP list
         const rsvpResponse = await fetch("/api/rsvps");
@@ -717,7 +720,7 @@ const App: React.FC = () => {
                                   "0 0 10px rgba(255, 0, 0, 0.3)";
                               }}
                             >
-                              💀 REFUND & DELETE 💀
+                              💀 REFUND RSVP 💀
                             </button>
                           )}
                         </motion.div>
