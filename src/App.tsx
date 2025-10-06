@@ -47,6 +47,11 @@ const App: React.FC = () => {
     text: string;
     whatsappLink?: string;
   } | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successData, setSuccessData] = useState<{
+    name: string;
+    whatsappLink: string;
+  } | null>(null);
 
   // Guest limit configuration
   const GUEST_LIMIT = 80;
@@ -140,14 +145,13 @@ const App: React.FC = () => {
         const newRsvp = await response.json();
         setRsvps((prev) => [newRsvp, ...prev]);
 
-        setMessage({
-          type: "success",
-          text:
-            "🎉 RSVP confirmed! Welcome to the nightmare, " +
-            formData.name +
-            "! Join our WhatsApp group for party updates! 📱",
+        // Show success modal instead of small message
+        setSuccessData({
+          name: formData.name,
           whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS"
         });
+        setShowSuccessModal(true);
+        setShowCheckout(false); // Hide checkout form
       } else {
         const errorText = await response.text();
         console.error("API response error:", response.status, errorText);
@@ -171,6 +175,19 @@ const App: React.FC = () => {
       text: "💀 Payment failed: " + error,
     });
     setShowCheckout(false);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    setSuccessData(null);
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      guests: 1,
+    });
+    setMessage(null);
   };
 
   const handleAdminLogin = () => {
@@ -955,6 +972,164 @@ const App: React.FC = () => {
           </div>
         </motion.footer>
       </div>
+
+      {/* Success Modal */}
+      <AnimatePresence>
+        {showSuccessModal && successData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.95)",
+              zIndex: 9999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+            }}
+            onClick={handleCloseSuccessModal}
+          >
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              style={{
+                background: "linear-gradient(135deg, #1a0a0a 0%, #2a0a0a 50%, #1a0a0a 100%)",
+                border: "3px solid #ff0000",
+                borderRadius: "20px",
+                padding: "2rem",
+                maxWidth: "500px",
+                width: "100%",
+                textAlign: "center",
+                boxShadow: "0 0 50px rgba(255, 0, 0, 0.5)",
+                position: "relative",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={handleCloseSuccessModal}
+                style={{
+                  position: "absolute",
+                  top: "1rem",
+                  right: "1rem",
+                  background: "transparent",
+                  border: "2px solid #ff0000",
+                  borderRadius: "50%",
+                  width: "40px",
+                  height: "40px",
+                  color: "#ff0000",
+                  fontSize: "1.2rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                ✕
+              </button>
+
+              {/* Success content */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <h2 style={{
+                  color: "#ff0000",
+                  fontSize: "2.5rem",
+                  marginBottom: "1rem",
+                  textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
+                  fontFamily: "Creepster, cursive"
+                }}>
+                  🎉 WELCOME TO THE NIGHTMARE! 🎉
+                </h2>
+                
+                <p style={{
+                  color: "#ff6666",
+                  fontSize: "1.3rem",
+                  marginBottom: "2rem",
+                  lineHeight: "1.5"
+                }}>
+                  RSVP confirmed, <strong style={{ color: "#ff0000" }}>{successData.name}</strong>!<br />
+                  Your soul has been claimed for the spookiest boat party of the year! 👻
+                </p>
+
+                <div style={{
+                  background: "rgba(255, 0, 0, 0.1)",
+                  border: "2px solid #ff0000",
+                  borderRadius: "15px",
+                  padding: "1.5rem",
+                  marginBottom: "2rem"
+                }}>
+                  <h3 style={{
+                    color: "#ff0000",
+                    marginBottom: "1rem",
+                    fontSize: "1.2rem"
+                  }}>
+                    🚢 PARTY DETAILS 🚢
+                  </h3>
+                  <p style={{ color: "#ff6666", marginBottom: "0.5rem" }}>
+                    📅 <strong>October 25th</strong> - 9:15 PM Boarding
+                  </p>
+                  <p style={{ color: "#ff6666", marginBottom: "0.5rem" }}>
+                    📍 <strong>208 Barton Springs Road, Austin, TX</strong>
+                  </p>
+                  <p style={{ color: "#ff6666" }}>
+                    🎭 <strong>After Party:</strong> Coconut Club
+                  </p>
+                </div>
+
+                <a
+                  href={successData.whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: "inline-block",
+                    background: "linear-gradient(45deg, #25D366, #128C7E)",
+                    color: "white",
+                    padding: "1rem 2rem",
+                    borderRadius: "25px",
+                    textDecoration: "none",
+                    fontWeight: "bold",
+                    fontSize: "1.1rem",
+                    boxShadow: "0 4px 15px rgba(37, 211, 102, 0.3)",
+                    transition: "all 0.3s ease",
+                    marginBottom: "1rem"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                    e.currentTarget.style.boxShadow = "0 6px 20px rgba(37, 211, 102, 0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.boxShadow = "0 4px 15px rgba(37, 211, 102, 0.3)";
+                  }}
+                >
+                  💬 Join WhatsApp Group for Updates
+                </a>
+
+                <p style={{
+                  color: "#ff9999",
+                  fontSize: "0.9rem",
+                  marginTop: "1rem",
+                  opacity: 0.8
+                }}>
+                  Check your email for confirmation details!<br />
+                  Can't wait to see you on the dark side... 🌙
+                </p>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Elements>
   );
 };
