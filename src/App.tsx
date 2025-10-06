@@ -50,6 +50,7 @@ const App: React.FC = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successData, setSuccessData] = useState<{
     name: string;
+    email: string;
     whatsappLink: string;
     emailSent?: boolean;
   } | null>(null);
@@ -174,12 +175,13 @@ const App: React.FC = () => {
           // Don't fail the whole process if email fails
         }
 
-        // Show success modal instead of small message
-        setSuccessData({
-          name: formData.name,
-          whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS",
-          emailSent: emailSent
-        });
+      // Show success modal instead of small message
+      setSuccessData({
+        name: formData.name,
+        email: formData.email,
+        whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS",
+        emailSent: emailSent
+      });
         setShowSuccessModal(true);
         setShowCheckout(false); // Hide checkout form
       } else {
@@ -1117,7 +1119,8 @@ const App: React.FC = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 style={{
-                  padding: "0 3rem 0 1rem", // Extra right padding to avoid close button
+                  padding: "0 2rem", // Equal padding on both sides for proper centering
+                  textAlign: "center",
                 }}
               >
                 <h2
@@ -1219,7 +1222,7 @@ const App: React.FC = () => {
                 >
                    {successData.emailSent ? (
                      <>
-                       ✅ Confirmation email sent to {formData.email}!
+                       ✅ Confirmation email sent to {successData.email}!
                        <br />
                        Check your inbox for party details.
                      </>
