@@ -1094,7 +1094,7 @@ const App: React.FC = () => {
                   position: "absolute",
                   top: "1rem",
                   right: "1rem",
-                  background: "transparent",
+                  background: "rgba(0, 0, 0, 0.8)",
                   border: "2px solid #ff0000",
                   borderRadius: "50%",
                   width: "40px",
@@ -1105,6 +1105,7 @@ const App: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  zIndex: 10,
                 }}
               >
                 ✕

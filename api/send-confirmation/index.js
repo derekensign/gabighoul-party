@@ -139,16 +139,13 @@ async function handler(req, res) {
             <div class="details-box">
               <h4 style="color: #ff0000; margin-bottom: 15px;">🎃 IMPORTANT REMINDERS 🎃</h4>
               <p>• Arrive 15 minutes early for boarding</p>
-              <p>• Bring your spookiest costume for the costume contest!</p>
+              <p>• Wear your scariest costume!</p>
               <p>• Don't forget your ID for entry</p>
               <p>• Get ready for a night of horror and fun on the water! 🌊</p>
             </div>
             
             <div class="footer">
               <p>Can't wait to see you on the dark side... 🌙</p>
-              <p style="font-size: 0.8rem; margin-top: 20px;">
-                Questions? Reply to this email or contact us through WhatsApp!
-              </p>
             </div>
           </div>
         </body>
