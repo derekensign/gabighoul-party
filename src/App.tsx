@@ -145,6 +145,25 @@ const App: React.FC = () => {
         const newRsvp = await response.json();
         setRsvps((prev) => [newRsvp, ...prev]);
 
+        // Send confirmation email
+        try {
+          await fetch("/api/send-confirmation", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              guests: formData.guests,
+            }),
+          });
+          console.log("Confirmation email sent successfully");
+        } catch (emailError) {
+          console.error("Failed to send confirmation email:", emailError);
+          // Don't fail the whole process if email fails
+        }
+
         // Show success modal instead of small message
         setSuccessData({
           name: formData.name,

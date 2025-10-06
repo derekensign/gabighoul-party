@@ -26,6 +26,7 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.3",
     "react-scripts": "5.0.1",
+    "resend": "^6.1.2",
     "stripe": "^19.0.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
