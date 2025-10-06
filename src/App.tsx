@@ -1076,7 +1076,7 @@ const App: React.FC = () => {
                 border: "3px solid #ff0000",
                 borderRadius: "20px",
                 padding: "1.5rem",
-                maxWidth: "450px",
+                maxWidth: "500px",
                 width: "100%",
                 maxHeight: "90vh",
                 overflowY: "auto",
@@ -1123,7 +1123,7 @@ const App: React.FC = () => {
                 <h2
                   style={{
                     color: "#ff0000",
-                    fontSize: "1.8rem",
+                    fontSize: "1.6rem",
                     marginBottom: "1rem",
                     textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
                     fontFamily: "Creepster, cursive",
