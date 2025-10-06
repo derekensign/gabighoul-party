@@ -112,7 +112,7 @@ async function handler(req, res) {
               <div class="detail-item">🚢 <strong>Departure:</strong> 9:25 PM</div>
               <div class="detail-item">📍 <strong>Location:</strong> 208 Barton Springs Road, Austin, TX 78704</div>
               <div class="detail-item">🏃 <strong>Return:</strong> 11:30 PM</div>
-              <div class="detail-item">🎭 <strong>After Party:</strong> Coconut Club</div>
+              <div class="detail-item">🌴 <strong>After Party:</strong> Coconut Club</div>
               <div class="detail-item">👥 <strong>Guests:</strong> ${guests}</div>
             </div>
             

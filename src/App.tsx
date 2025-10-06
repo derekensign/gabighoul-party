@@ -1011,6 +1011,7 @@ const App: React.FC = () => {
               alignItems: "center",
               justifyContent: "center",
               padding: "1rem",
+              overflow: "auto",
             }}
             onClick={handleCloseSuccessModal}
           >
@@ -1023,12 +1024,15 @@ const App: React.FC = () => {
                 background: "linear-gradient(135deg, #1a0a0a 0%, #2a0a0a 50%, #1a0a0a 100%)",
                 border: "3px solid #ff0000",
                 borderRadius: "20px",
-                padding: "2rem",
-                maxWidth: "500px",
+                padding: "1.5rem",
+                maxWidth: "400px",
                 width: "100%",
+                maxHeight: "90vh",
+                overflowY: "auto",
                 textAlign: "center",
                 boxShadow: "0 0 50px rgba(255, 0, 0, 0.5)",
                 position: "relative",
+                margin: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -1063,19 +1067,19 @@ const App: React.FC = () => {
               >
                 <h2 style={{
                   color: "#ff0000",
-                  fontSize: "2.5rem",
+                  fontSize: "2rem",
                   marginBottom: "1rem",
                   textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
                   fontFamily: "Creepster, cursive"
                 }}>
-                  🎉 WELCOME TO THE NIGHTMARE! 🎉
+                  👻 WELCOME TO THE NIGHTMARE! 👻
                 </h2>
                 
                 <p style={{
                   color: "#ff6666",
-                  fontSize: "1.3rem",
-                  marginBottom: "2rem",
-                  lineHeight: "1.5"
+                  fontSize: "1.1rem",
+                  marginBottom: "1.5rem",
+                  lineHeight: "1.4"
                 }}>
                   RSVP confirmed, <strong style={{ color: "#ff0000" }}>{successData.name}</strong>!<br />
                   Your soul has been claimed for the spookiest boat party of the year! 👻
@@ -1085,8 +1089,8 @@ const App: React.FC = () => {
                   background: "rgba(255, 0, 0, 0.1)",
                   border: "2px solid #ff0000",
                   borderRadius: "15px",
-                  padding: "1.5rem",
-                  marginBottom: "2rem"
+                  padding: "1rem",
+                  marginBottom: "1.5rem"
                 }}>
                   <h3 style={{
                     color: "#ff0000",
@@ -1102,7 +1106,7 @@ const App: React.FC = () => {
                     📍 <strong>208 Barton Springs Road, Austin, TX</strong>
                   </p>
                   <p style={{ color: "#ff6666" }}>
-                    🎭 <strong>After Party:</strong> Coconut Club
+                    🌴 <strong>After Party:</strong> Coconut Club
                   </p>
                 </div>
 
