@@ -154,9 +154,9 @@ async function handler(req, res) {
 
     console.log('📧 Attempting to send email to:', email);
     
-    const { data, error } = await resend.emails.send({
-      from: 'GABYGHOUL Party <onboarding@resend.dev>',
-      to: [email],
+        const { data, error } = await resend.emails.send({
+          from: 'GABYGHOUL Party <onboarding@resend.dev>',
+          to: ['derekensign@gmail.com'], // Temporary: only send to your email for testing
       subject: '🎃 RSVP Confirmed - Welcome to the Nightmare!',
       html: emailHtml,
     });
