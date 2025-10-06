@@ -1092,15 +1092,15 @@ const App: React.FC = () => {
                 onClick={handleCloseSuccessModal}
                 style={{
                   position: "absolute",
-                  top: "1rem",
-                  right: "1rem",
+                  top: "0.75rem",
+                  right: "0.75rem",
                   background: "rgba(0, 0, 0, 0.8)",
                   border: "2px solid #ff0000",
                   borderRadius: "50%",
-                  width: "40px",
-                  height: "40px",
+                  width: "35px",
+                  height: "35px",
                   color: "#ff0000",
-                  fontSize: "1.2rem",
+                  fontSize: "1.1rem",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -1116,14 +1116,20 @@ const App: React.FC = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
+                style={{
+                  padding: "0 3rem 0 1rem", // Extra right padding to avoid close button
+                }}
               >
                 <h2
                   style={{
                     color: "#ff0000",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     marginBottom: "1rem",
                     textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
                     fontFamily: "Creepster, cursive",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   WELCOME TO THE NIGHTMARE!
