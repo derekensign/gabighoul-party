@@ -1076,7 +1076,7 @@ const App: React.FC = () => {
                 border: "3px solid #ff0000",
                 borderRadius: "20px",
                 padding: "1.5rem",
-                maxWidth: "400px",
+                maxWidth: "450px",
                 width: "100%",
                 maxHeight: "90vh",
                 overflowY: "auto",
@@ -1127,9 +1127,6 @@ const App: React.FC = () => {
                     marginBottom: "1rem",
                     textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
                     fontFamily: "Creepster, cursive",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                   }}
                 >
                   WELCOME TO THE NIGHTMARE!
