@@ -51,6 +51,7 @@ const App: React.FC = () => {
   const [successData, setSuccessData] = useState<{
     name: string;
     whatsappLink: string;
+    emailSent?: boolean;
   } | null>(null);
 
   // Guest limit configuration
@@ -146,8 +147,9 @@ const App: React.FC = () => {
         setRsvps((prev) => [newRsvp, ...prev]);
 
         // Send confirmation email
+        let emailSent = false;
         try {
-          await fetch("/api/send-confirmation", {
+          const emailResponse = await fetch("/api/send-confirmation", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -158,16 +160,25 @@ const App: React.FC = () => {
               guests: formData.guests,
             }),
           });
-          console.log("Confirmation email sent successfully");
+          
+          if (emailResponse.ok) {
+            const emailData = await emailResponse.json();
+            console.log("✅ Confirmation email sent successfully:", emailData);
+            emailSent = true;
+          } else {
+            const emailError = await emailResponse.text();
+            console.error("❌ Email API error:", emailResponse.status, emailError);
+          }
         } catch (emailError) {
-          console.error("Failed to send confirmation email:", emailError);
+          console.error("❌ Failed to send confirmation email:", emailError);
           // Don't fail the whole process if email fails
         }
 
         // Show success modal instead of small message
         setSuccessData({
           name: formData.name,
-          whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS"
+          whatsappLink: "https://chat.whatsapp.com/BpT9NYyu7UILMnQppoVEqS",
+          emailSent: emailSent
         });
         setShowSuccessModal(true);
         setShowCheckout(false); // Hide checkout form
@@ -443,24 +454,28 @@ const App: React.FC = () => {
         >
           <div className="rsvp-form">
             <h3 className="form-title">
-              {isSoldOut ? "💀 SOLD OUT - HELL IS FULL 💀" : "🪦 SECURE YOUR SPOT IN HELL 🪦"}
+              {isSoldOut
+                ? "💀 SOLD OUT - HELL IS FULL 💀"
+                : "🪦 SECURE YOUR SPOT IN HELL 🪦"}
             </h3>
-            
 
             {isSoldOut ? (
-              <div style={{
-                textAlign: "center",
-                padding: "2rem",
-                background: "rgba(255, 0, 0, 0.1)",
-                border: "2px solid #ff0000",
-                borderRadius: "10px",
-                color: "#ff6666"
-              }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "2rem",
+                  background: "rgba(255, 0, 0, 0.1)",
+                  border: "2px solid #ff0000",
+                  borderRadius: "10px",
+                  color: "#ff6666",
+                }}
+              >
                 <h4 style={{ marginBottom: "1rem", color: "#ff0000" }}>
                   🎃 THE NIGHTMARE IS FULL! 🎃
                 </h4>
                 <p style={{ marginBottom: "1rem" }}>
-                  All 80 spots have been claimed by brave souls ready to face the horror.
+                  All 80 spots have been claimed by brave souls ready to face
+                  the horror.
                 </p>
                 <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>
                   Follow us on social media for updates on future spooky events!
@@ -588,7 +603,8 @@ const App: React.FC = () => {
                         rel="noreferrer"
                         style={{
                           display: "inline-block",
-                          background: "linear-gradient(45deg, #25D366, #128C7E)",
+                          background:
+                            "linear-gradient(45deg, #25D366, #128C7E)",
                           color: "white",
                           padding: "0.75rem 1.5rem",
                           borderRadius: "25px",
@@ -600,11 +616,13 @@ const App: React.FC = () => {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = "scale(1.05)";
-                          e.currentTarget.style.boxShadow = "0 6px 20px rgba(37, 211, 102, 0.4)";
+                          e.currentTarget.style.boxShadow =
+                            "0 6px 20px rgba(37, 211, 102, 0.4)";
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = "scale(1)";
-                          e.currentTarget.style.boxShadow = "0 4px 15px rgba(37, 211, 102, 0.3)";
+                          e.currentTarget.style.boxShadow =
+                            "0 4px 15px rgba(37, 211, 102, 0.3)";
                         }}
                       >
                         💬 Join WhatsApp Group
@@ -778,74 +796,106 @@ const App: React.FC = () => {
                 <div>
                   <h3 className="form-title">👻 RSVP LIST 👻</h3>
                   <p style={{ color: "#ff6666", marginBottom: "1rem" }}>
-                    Total RSVPs: {rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).length} | Total Guests:{" "}
-                    {rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).reduce((sum, rsvp) => sum + rsvp.guests, 0)}
+                    Total RSVPs:{" "}
+                    {
+                      rsvps.filter(
+                        (rsvp) =>
+                          rsvp.paymentStatus === "completed" &&
+                          rsvp.stripe_payment_intent_id
+                      ).length
+                    }{" "}
+                    | Total Guests:{" "}
+                    {rsvps
+                      .filter(
+                        (rsvp) =>
+                          rsvp.paymentStatus === "completed" &&
+                          rsvp.stripe_payment_intent_id
+                      )
+                      .reduce((sum, rsvp) => sum + rsvp.guests, 0)}
                     <br />
-                    🎃 {GUEST_LIMIT - rsvps.filter(rsvp => rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id).reduce((sum, rsvp) => sum + rsvp.guests, 0)} spots remaining out of {GUEST_LIMIT} 🎃
+                    🎃{" "}
+                    {GUEST_LIMIT -
+                      rsvps
+                        .filter(
+                          (rsvp) =>
+                            rsvp.paymentStatus === "completed" &&
+                            rsvp.stripe_payment_intent_id
+                        )
+                        .reduce((sum, rsvp) => sum + rsvp.guests, 0)}{" "}
+                    spots remaining out of {GUEST_LIMIT} 🎃
                   </p>
                   <div className="rsvp-list">
-                    {rsvps.filter(rsvp => rsvp.stripe_payment_intent_id).length === 0 ? (
+                    {rsvps.filter((rsvp) => rsvp.stripe_payment_intent_id)
+                      .length === 0 ? (
                       <p style={{ color: "#666", textAlign: "center" }}>
                         No real RSVPs yet... The crypt is empty.
                       </p>
                     ) : (
-                      rsvps.filter(rsvp => rsvp.stripe_payment_intent_id).map((rsvp) => (
-                        <motion.div
-                          key={rsvp.id}
-                          className="rsvp-item"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
-                            gap: "1rem",
-                          }}
-                        >
-                          <div style={{ flex: 1 }}>
-                            <h4>{rsvp.name}</h4>
-                            <p>Email: {rsvp.email}</p>
-                            <p>Phone: {rsvp.phone}</p>
-                            <p>Guests: {rsvp.guests}</p>
-                            <p>Status: {rsvp.paymentStatus} {rsvp.stripe_payment_intent_id ? '💳' : '🧪'}</p>
-                            <p>
-                              RSVP Date:{" "}
-                              {new Date(rsvp.timestamp).toLocaleDateString()}
-                            </p>
-                          </div>
-                          {rsvp.paymentStatus === "completed" && rsvp.stripe_payment_intent_id && (
-                            <button
-                              onClick={() => handleRefund(rsvp.id)}
-                              style={{
-                                background:
-                                  "linear-gradient(45deg, #ff0000, #8b0000)",
-                                border: "1px solid #ff0000",
-                                borderRadius: "5px",
-                                color: "#ffffff",
-                                padding: "0.5rem 1rem",
-                                fontSize: "0.9rem",
-                                cursor: "pointer",
-                                boxShadow: "0 0 10px rgba(255, 0, 0, 0.3)",
-                                transition: "all 0.3s ease",
-                                alignSelf: "flex-start",
-                                marginTop: "0.5rem",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = "scale(1.05)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 0 15px rgba(255, 0, 0, 0.5)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = "scale(1)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 0 10px rgba(255, 0, 0, 0.3)";
-                              }}
-                            >
-                              💀 REFUND RSVP 💀
-                            </button>
-                          )}
-                        </motion.div>
-                      ))
+                      rsvps
+                        .filter((rsvp) => rsvp.stripe_payment_intent_id)
+                        .map((rsvp) => (
+                          <motion.div
+                            key={rsvp.id}
+                            className="rsvp-item"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "flex-start",
+                              gap: "1rem",
+                            }}
+                          >
+                            <div style={{ flex: 1 }}>
+                              <h4>{rsvp.name}</h4>
+                              <p>Email: {rsvp.email}</p>
+                              <p>Phone: {rsvp.phone}</p>
+                              <p>Guests: {rsvp.guests}</p>
+                              <p>
+                                Status: {rsvp.paymentStatus}{" "}
+                                {rsvp.stripe_payment_intent_id ? "💳" : "🧪"}
+                              </p>
+                              <p>
+                                RSVP Date:{" "}
+                                {new Date(rsvp.timestamp).toLocaleDateString()}
+                              </p>
+                            </div>
+                            {rsvp.paymentStatus === "completed" &&
+                              rsvp.stripe_payment_intent_id && (
+                                <button
+                                  onClick={() => handleRefund(rsvp.id)}
+                                  style={{
+                                    background:
+                                      "linear-gradient(45deg, #ff0000, #8b0000)",
+                                    border: "1px solid #ff0000",
+                                    borderRadius: "5px",
+                                    color: "#ffffff",
+                                    padding: "0.5rem 1rem",
+                                    fontSize: "0.9rem",
+                                    cursor: "pointer",
+                                    boxShadow: "0 0 10px rgba(255, 0, 0, 0.3)",
+                                    transition: "all 0.3s ease",
+                                    alignSelf: "flex-start",
+                                    marginTop: "0.5rem",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform =
+                                      "scale(1.05)";
+                                    e.currentTarget.style.boxShadow =
+                                      "0 0 15px rgba(255, 0, 0, 0.5)";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform =
+                                      "scale(1)";
+                                    e.currentTarget.style.boxShadow =
+                                      "0 0 10px rgba(255, 0, 0, 0.3)";
+                                  }}
+                                >
+                                  💀 REFUND RSVP 💀
+                                </button>
+                              )}
+                          </motion.div>
+                        ))
                     )}
                   </div>
                   <button
@@ -1021,7 +1071,8 @@ const App: React.FC = () => {
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               style={{
-                background: "linear-gradient(135deg, #1a0a0a 0%, #2a0a0a 50%, #1a0a0a 100%)",
+                background:
+                  "linear-gradient(135deg, #1a0a0a 0%, #2a0a0a 50%, #1a0a0a 100%)",
                 border: "3px solid #ff0000",
                 borderRadius: "20px",
                 padding: "1.5rem",
@@ -1065,38 +1116,51 @@ const App: React.FC = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <h2 style={{
-                  color: "#ff0000",
-                  fontSize: "2rem",
-                  marginBottom: "1rem",
-                  textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
-                  fontFamily: "Creepster, cursive"
-                }}>
+                <h2
+                  style={{
+                    color: "#ff0000",
+                    fontSize: "2rem",
+                    marginBottom: "1rem",
+                    textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
+                    fontFamily: "Creepster, cursive",
+                  }}
+                >
                   WELCOME TO THE NIGHTMARE!
                 </h2>
-                
-                <p style={{
-                  color: "#ff6666",
-                  fontSize: "1.1rem",
-                  marginBottom: "1.5rem",
-                  lineHeight: "1.4"
-                }}>
-                  RSVP confirmed, <strong style={{ color: "#ff0000" }}>{successData.name}</strong>!<br />
-                  Your soul has been claimed for the spookiest boat party of the year! 👻
+
+                <p
+                  style={{
+                    color: "#ff6666",
+                    fontSize: "1.1rem",
+                    marginBottom: "1.5rem",
+                    lineHeight: "1.4",
+                  }}
+                >
+                  RSVP confirmed,{" "}
+                  <strong style={{ color: "#ff0000" }}>
+                    {successData.name}
+                  </strong>
+                  !<br />
+                  Your soul has been claimed for the spookiest boat party of the
+                  year! 👻
                 </p>
 
-                <div style={{
-                  background: "rgba(255, 0, 0, 0.1)",
-                  border: "2px solid #ff0000",
-                  borderRadius: "15px",
-                  padding: "1rem",
-                  marginBottom: "1.5rem"
-                }}>
-                  <h3 style={{
-                    color: "#ff0000",
-                    marginBottom: "1rem",
-                    fontSize: "1.2rem"
-                  }}>
+                <div
+                  style={{
+                    background: "rgba(255, 0, 0, 0.1)",
+                    border: "2px solid #ff0000",
+                    borderRadius: "15px",
+                    padding: "1rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <h3
+                    style={{
+                      color: "#ff0000",
+                      marginBottom: "1rem",
+                      fontSize: "1.2rem",
+                    }}
+                  >
                     🚢 PARTY DETAILS 🚢
                   </h3>
                   <p style={{ color: "#ff6666", marginBottom: "0.5rem" }}>
@@ -1125,28 +1189,45 @@ const App: React.FC = () => {
                     fontSize: "1.1rem",
                     boxShadow: "0 4px 15px rgba(37, 211, 102, 0.3)",
                     transition: "all 0.3s ease",
-                    marginBottom: "1rem"
+                    marginBottom: "1rem",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "scale(1.05)";
-                    e.currentTarget.style.boxShadow = "0 6px 20px rgba(37, 211, 102, 0.4)";
+                    e.currentTarget.style.boxShadow =
+                      "0 6px 20px rgba(37, 211, 102, 0.4)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow = "0 4px 15px rgba(37, 211, 102, 0.3)";
+                    e.currentTarget.style.boxShadow =
+                      "0 4px 15px rgba(37, 211, 102, 0.3)";
                   }}
                 >
                   💬 Join WhatsApp Group for Updates
                 </a>
 
-                <p style={{
-                  color: "#ff9999",
-                  fontSize: "0.9rem",
-                  marginTop: "1rem",
-                  opacity: 0.8
-                }}>
-                  Check your email for confirmation details!<br />
-                  Can't wait to see you on the dark side... 🌙
+                <p
+                  style={{
+                    color: "#ff9999",
+                    fontSize: "0.9rem",
+                    marginTop: "1rem",
+                    opacity: 0.8,
+                  }}
+                >
+                   {successData.emailSent ? (
+                     <>
+                       ✅ Confirmation email sent to {formData.email}!
+                       <br />
+                       Check your inbox for party details.
+                     </>
+                   ) : (
+                     <>
+                       ⚠️ Email confirmation failed to send.
+                       <br />
+                       Don't worry - your RSVP is still confirmed!
+                     </>
+                   )}
+                   <br />
+                   Can't wait to see you on the dark side... 🌙
                 </p>
               </motion.div>
             </motion.div>
