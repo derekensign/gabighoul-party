@@ -1072,7 +1072,7 @@ const App: React.FC = () => {
                   textShadow: "0 0 20px rgba(255, 0, 0, 0.8)",
                   fontFamily: "Creepster, cursive"
                 }}>
-                  👻 WELCOME TO THE NIGHTMARE! 👻
+                  WELCOME TO THE NIGHTMARE!
                 </h2>
                 
                 <p style={{

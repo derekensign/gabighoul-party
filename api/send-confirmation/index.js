@@ -96,7 +96,7 @@ async function handler(req, res) {
         <body>
           <div class="container">
             <div class="header">
-              <h1 class="title">🎃 WELCOME TO THE NIGHTMARE! 🎃</h1>
+              <h1 class="title">WELCOME TO THE NIGHTMARE!</h1>
               <p class="subtitle">RSVP Confirmed for GABYGHOUL's Halloween Boat Party</p>
             </div>
             
