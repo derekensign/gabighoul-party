@@ -17,10 +17,24 @@ async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  // Debug logging
+  console.log('📧 Email confirmation request received');
+  console.log('Request body:', req.body);
+  console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+
   const { name, email, guests } = req.body;
 
   if (!name || !email || !guests) {
-    return res.status(400).json({ message: 'Missing required fields' });
+    console.log('❌ Missing required fields:', { name: !!name, email: !!email, guests: !!guests });
+    return res.status(400).json({ 
+      message: 'Missing required fields',
+      received: { name: !!name, email: !!email, guests: !!guests }
+    });
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.log('❌ RESEND_API_KEY not found in environment variables');
+    return res.status(500).json({ message: 'Email service not configured' });
   }
 
   try {
@@ -141,6 +155,8 @@ async function handler(req, res) {
       </html>
     `;
 
+    console.log('📧 Attempting to send email to:', email);
+    
     const { data, error } = await resend.emails.send({
       from: 'GABYGHOUL Party <noreply@gabyghoul-party.vercel.app>',
       to: [email],
@@ -149,11 +165,14 @@ async function handler(req, res) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
-      return res.status(400).json({ error: error.message });
+      console.error('❌ Resend API error:', error);
+      return res.status(400).json({ 
+        error: error.message,
+        details: error
+      });
     }
 
-    console.log('Email sent successfully:', data);
+    console.log('✅ Email sent successfully:', data);
     res.status(200).json({ success: true, messageId: data.id });
 
   } catch (error) {
